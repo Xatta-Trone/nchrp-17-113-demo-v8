@@ -1,0 +1,54 @@
+[
+  {
+    "Demographic": ["US","Non-US"]
+  },
+  {
+    "Safer People": [
+      {
+        "Person Demographic": [
+          "Young Drivers",
+          "Older Drivers",
+          "Unlicensed and Revoked"
+        ]
+      },
+      {
+        "VRUs": ["Pedestrian", "Bicycle", "Motorcycle"]
+      },
+      {
+        "Behavior": [
+          "Speeding related",
+          "Aggressive driving",
+          "Alcohol-related",
+          "Seatbelt use",
+          "Distracted drivers"
+        ]
+      }
+    ]
+  },
+  {
+    "Safer Vehicles": ["Heavy Trucks"]
+  },
+  {
+    "Safer Roads": [
+      {
+        "Intersection Related": ["Unsignalized", "Signalized"]
+      },
+      {
+        "Segment Related": [
+          "Head-on crashes on freeways",
+          "Work zone collisions",
+          "Horizontal curve",
+          "Head-on crashes",
+          "Run-off-road",
+          "Utility poles, Trees"
+        ]
+      }
+    ]
+  },
+  {
+    "Safer Speed": ["Speeding related"]
+  },
+  {
+    "Post-Crash Care": ["Emergency Medical Service (EMS)"]
+  }
+]

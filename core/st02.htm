@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Selection Tool</title>
+   <!-- Bootstrap -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="../css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+    <link href="../css/nchrp1441.css?v=20160525" rel="stylesheet" media="screen,print">
+    <link href="../css/nchrp1441-facility.css?v=20160525" rel="stylesheet" media="screen,print">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' media="print">
+    <script type="text/javascript" src="https://cdn.rawgit.com/niklasvh/html2canvas/0.5.0-alpha2/dist/html2canvas.min.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <link href="../css/report.css?v=20160525" rel="stylesheet" media="print">
+</head>
+
+<body class="facility">
+  <header class="navbar navbar-static-top navbar-inverse" id="top" role="banner">
+  <div class="container v2">
+    <div class="navbar-header">
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="../index.htm" class="navbar-brand">NCHRP 17-113</a>
+    </div>
+    <nav class="collapse navbar-collapse bs-navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li>
+          <a href="../index.htm">Home</a>
+        </li>
+        <li class="">
+          <a href="facility.htm">Searchable Database 1</a>
+        </li>
+        <li class="active">
+          <a href="st02.htm">Searchable Database 2</a>
+        </li>
+        <li class="">
+          <a href="fra.htm">Searchable Database 3</a>
+        </li>
+        <li>
+          <a href="tool.htm">NCHRP 17-113 Tools</a>
+        </li>
+
+      </ul>
+      
+    </nav>
+  </div><!-- end .container -->
+  </header>
+
+    <!-- ************************************************************************************************* -->
+
+    <div class="container-fluid">
+        <div class="page-header" style="text-align: center;">
+            <h2>Searchable Database</h2>
+        </div>
+    </div>
+    <div class="container" id="toolbar">
+        <div class="wrapper text-center">
+                <a href="introduction.html" class="btn btn-default">General Information</a>
+                <a href="instructions.html" class="btn btn-default">Tool Instructions</a>
+        </div>
+    </div>
+    <br><br>
+    
+    <div class="container tool"> 
+      <div class="rct-comp-div">
+          <h5>Study Location<sup class="required noprint"></sup></h5>
+          <select class="form-control rct-dropdown" id="treatmentSelect" onchange="updator()">
+              <option value=""></option>
+              <option value="Median Cable Barrier">Cable Barrier</option>
+              <option value="Sign Posts">Support Posts and Poles</option>
+              <option value="Edge of Pavement">Edge of Pavement</option>
+              <option value="Gore/Median">Gore/Median</option>
+              <option value="Guardrail">Guardrail</option>
+              <option value="Mow Edge">Mow Edge</option>
+              <option value="Slope Embankment">Slope Embankment</option>
+          </select>
+          <br/>
+          <h5>Users<sup class="required noprint"></sup></h5>
+          <select class="form-control rct-dropdown" id="aestheticSelect" onchange="updator()">
+              <option value=""></option>
+              <option value="Standard">Standard </option>
+              <option value="High">High</option>
+          </select>
+          <br/>
+          <h5>NCHRP 500 Focus Areas<sup class="required noprint"></sup></h5>
+          <select class="form-control rct-dropdown" id="constructionSelect" onchange="updator()">
+              <option value=""></option>
+              <option value="New Construction">New Construction</option>
+              <option value="Retrofit">Retrofit</option>
+          </select>
+      </div>
+
+      <p style="color:white;"></p>
+      <div class="listcontainer">
+        <div class="rct-comp-div rct-method-card" style="display:none" id="standardID">
+          <div class="rct-card-img"><a href="docs/STANDARD CONCRETE PAVEMENT.pdf" target="_blank"><img src="images/ref/img2ab.png" /></a></div>
+          <div class="rct-card-txt">
+            <h3>Standard Concrete Pavement</h3><br/>
+            <p>This VMS application is applicable for most roadside locations. Standard concrete pavement can be colored or patterned during installation. One of the few disadvantages of this application is its high installation cost; however, this VMS has a high effective longevity. </p>
+            <p><a href="docs/STANDARD CONCRETE PAVEMENT.pdf" target="_blank">Information Sheet</a></p>
+            <p>If using with a strong post guardrail refer to the STRONG POST GUARDRAIL USE WITH RIGID VMS MATERIALS <a href="docs/STRONG POST GUARDRAIL.pdf" target="_blank">information sheet</a> for leave-out compliance requirements.</p>
+          </div>
+          </div>
+        </div>
+        <div class="rct-comp-div rct-method-card" style="display:none" id="minorID">
+          <div class="rct-card-img"><a href="docs/MINOR CONCRETE PAVEMENT.pdf" target="_blank"><img src="images/ref/img1abb.png" /></a></div>
+          <div class="rct-card-txt">
+            <h3>Minor Concrete Pavement</h3><br/>
+            <p>Minor concrete pavement can be easily installed with standard equipment and colored and patterned for a variety of uses. Minor concrete can contain additives such as crumb rubber and polypropylene fibers.</p>
+              <p><a href="docs/MINOR CONCRETE PAVEMENT.pdf" target="_blank">Information Sheet</a></p>
+              <p>If using with a strong post guardrail refer to the STRONG POST GUARDRAIL USE WITH RIGID VMS MATERIALS <a href="docs/STRONG POST GUARDRAIL.pdf" target="_blank">information sheet</a> for leave-out compliance requirements.</p>
+          </div>
+        </div>
+        <div class="rct-comp-div rct-method-card" style="display:none" id="asphID">
+          <div class="rct-card-img"><a href="docs/ASPHALT COMPOSITE.pdf" target="_blank"><img src="images/ref/img3.png" /></a></div>
+          <div class="rct-card-txt">
+            <h3>Asphalt Composite</h3><br/>
+            <p>Asphalt composite consists of an asphalt emulsion reinforced with fiberglass strands. This method is a rapid, single step, high rate application that minimizes lane closure and worker exposure. Seamless installation minimizes weed encroachment at seams. This treatment adheres to asphalt, concrete, wood and metal. Installation requires a temperature >50°.</p>
+            <p><a href="docs/ASPHALT COMPOSITE.pdf" target="_blank">Information Sheet</a></p>
+          </div>
+        </div>
+        <div class="rct-comp-div rct-method-card" style="display:none" id="asphConcreteID">
+          <div class="rct-card-img"><a href="docs/ASPHALT CONCRETE PAVEMENT.pdf" target="_blank"><img src="images/ref/img21aa.png" /></a></div>
+          <div class="rct-card-txt">
+            <h3>Asphalt Concrete Pavement</h3><br/>
+            <p>Standard Type B asphalt concrete mixed, spread and compacted per DOT specifications. The material thickness varies and is site specific. This VMS is used in most applications at a generally lower cost.</p>
+            <p><a href="docs/ASPHALT CONCRETE PAVEMENT.pdf" target="_blank">Information Sheet</a></p>
+              <p>If using with a strong post guardrail refer to the STRONG POST GUARDRAIL USE WITH RIGID VMS MATERIALS <a href="docs/STRONG POST GUARDRAIL.pdf" target="_blank">information sheet</a> for leave-out compliance requirements.</p>
+
+          </div>
+        </div>
+        <div class="rct-comp-div rct-method-card" style="display:none" id="stampedAsphID">
+          <div class="rct-card-img"><a href="docs/STAMPED ASPHALT PAVEMENT.pdf" target="_blank"><img src="images/ref/img4aa.png" /></a></div>
+          <div class="rct-card-txt">
+            <h3>Stamped Asphalt Pavement</h3><br/>
+            <p>Stamped asphalt pavement is an economical alternative to other types of aesthetic pavements. This VMS has variety of colors and patterns and installation is less labor intensive than patterned concrete pavement.</p>
+              <p><a href="docs/STAMPED ASPHALT PAVEMENT.pdf" target="_blank">Information Sheet</a></p>
+              <p>If using with a strong post guardrail refer to the STRONG POST GUARDRAIL USE WITH RIGID VMS MATERIALS <a href="docs/STRONG POST GUARDRAIL.pdf" target="_blank">information sheet</a> for leave-out compliance requirements.</p>
+          </div>
+        </div>
+        <div class="rct-comp-div rct-method-card" style="display:none" id="patternedID">
+          <div class="rct-card-img"><a href="docs/PATTERENED CONCRETE PAVEMENT.pdf" target="_blank"><img src="images/ref/img5ac.png" /></a></div>
+          <div class="rct-card-txt">
+            <h3>Patterned Concrete Pavement</h3><br/>
+            <p>Patterned concrete consists of a standard concrete mixture using color additive and a stamped pattern Patterned concrete pavement is imprinted with patterns before curing. Color can by surface applied or integral to the concrete mix. This VMS treatment is more expensive and labor intensive than stamped asphalt, but it is better suited at some locations such as steeper slopes. This VMS is not well suited for most retrofit locations.</p>
+            <p><a href="docs/PATTERENED CONCRETE PAVEMENT.pdf" target="_blank">Information Sheet</a></p>
+            <p>If using with a strong post guardrail refer to the STRONG POST GUARDRAIL USE WITH RIGID VMS MATERIALS <a href="docs/STRONG POST GUARDRAIL.pdf" target="_blank">information sheet</a> for leave-out compliance requirements.</p>
+
+          </div>
+        </div>
+        <div class="rct-comp-div rct-method-card" style="display:none" id="weedControlID">
+          <div class="rct-card-img"><a href="docs/WEED CONTROL FIBER MAT.pdf" target="_blank"><img src="images/ref/img10ab.png" /></a></div>
+          <div class="rct-card-txt">
+            <h3>Weed Control Fiber Mat</h3><br/>
+            <p>This VMS consists of mats of synthetic polyester fibers made from recycled drink bottles. These mats need to be placed on a level surface without any debris. This VMS can be used in new and retrofit locations. The VMS comes in rolls up to 6ft. wide in a variety of colors.</p>
+            <p><a href="docs/WEED CONTROL FIBER MAT.pdf" target="_blank">Information Sheet</a></p>
+          </div>
+        </div>
+        <div class="rct-comp-div rct-method-card" style="display:none" id="recycledAsphID">
+          <div class="rct-card-img"><a href="docs/RECYCLED ASPHALT MILLINGS.pdf" target="_blank"><img src="images/ref/img22aa.png" /></a></div>
+          <div class="rct-card-txt">
+            <h3>Recycled Asphalt Millings</h3><br/>
+            <p>Compacted recycled asphalt from asphalt milling operations is applied on a prepared surface on compacted subgrade. The longevity and effectiveness of this VMS is directly related to proper installation. Compaction is required to ensure the asphalt millings are not dislodged and subject to weed infiltration.</p>
+            <p><a href="docs/RECYCLED ASPHALT MILLINGS.pdf" target="_blank">Information Sheet</a></p>
+          </div>
+        </div>
+        <div class="rct-comp-div rct-method-card" style="display:none" id="rockBlanketID">
+          <div class="rct-card-img"><a href="docs/ROCK BLANKET.pdf" target="_blank"><img src="images/ref/img6cd.png" /></a></div>
+          <div class="rct-card-txt">
+            <h3>Rock Blanket</h3><br/>
+            <p>A rock blanket used as a VMS consists of rock cobble installed on the soil surface with or without using mortar. The size, color and texture of the rock blanket can vary with the rock material choice.</p>
+              <p><a href="docs/ROCK BLANKET.pdf" target="_blank">Information Sheet</a></p>
+              <p>If using with a strong post guardrail refer to the STRONG POST GUARDRAIL USE WITH RIGID VMS MATERIALS <a href="docs/STRONG POST GUARDRAIL.pdf" target="_blank">information sheet</a> for leave-out compliance requirements.</p>
+          </div>
+        </div>
+        <div class="rct-comp-div rct-method-card" style="display:none" id="gravelMuID">
+          <div class="rct-card-img"><a href="docs/GRAVEL MULCH.pdf" target="_blank"><img src="images/ref/img7aa.png" /></a></div>
+          <div class="rct-card-txt">
+            <h3>Gravel Mulch</h3><br/>
+            <p>Gravel mulch consists of placing graded, crushed, or quarried rock over a geosynthetic fabric (herbicide or non-herbicide treated). The use of this VMS allows for stormwater infiltration. Limitations to this treatment include the potential for displacement by errant vehicles and maintenance equipment and voids filling with windblown soil allowing weed development.</p>
+            <p><a href="docs/GRAVEL MULCH.pdf" target="_blank">Information Sheet</a></p>
+          </div>
+        </div>
+        <div class="rct-comp-div rct-method-card" style="display:none" id="rockSlopeID">
+          <div class="rct-card-img"><a href="docs/ROCK SLOPE PROTECTION.pdf" target="_blank"><img src="images/ref/img7ac.png" /></a></div>
+          <div class="rct-card-txt">
+            <h3>Rock Slope Protection</h3><br/>
+            <p>Rock slope protection consists of rock cobble (usually larger than other VMS applications) placed over a geosynthetic blanket (herbicide or non-herbicide treated). It is generally used on slopes and embankments. This VMS is relatively low cost and easily installed. The color and texture vary with the rock used. This VMS has limited use due to the size of the rock cobble used.</p>
+            <p><a href="docs/ROCK SLOPE PROTECTION.pdf" target="_blank">Information Sheet</a></p>
+          </div>
+        </div>
+        <div class="rct-comp-div rct-method-card" style="display:none" id="agregateID">
+          <div class="rct-card-img"><a href="docs/AGGREGATE BASE.pdf" target="_blank"><img src="images/ref/img8aa.png" /></a></div>
+          <div class="rct-card-txt">
+            <h3>Aggregate Base</h3><br/>
+            <p>This VMS consists of a compactable aggregate base placed on prepared surface and compacted to 90-95%. This VMS uses standard installation and maintenance equipment and allows for stormwater infiltration.</p>
+            <p><a href="docs/AGGREGATE BASE.pdf" target="_blank">Information Sheet</a></p>
+          </div>
+        </div>
+
+        <div class="rct-comp-div rct-method-card" style="display:none" id="ModularPaveID">
+          <div class="rct-card-img"><a href="docs/MODULAR PAVING UNITS.pdf" target="_blank"><img src="images/ref/img25a.png" /></a></div>
+          <div class="rct-card-txt">
+            <h3>Modular Paving Units</h3><br/>
+            <p>Modular paving units consist of concrete or brick pavers used as a VMS. They are durable, come in a variety of shapes and colors, and can be a cost effective treatment. Pavers can sustain both pedestrian and vehicle traffic depending on the specifications of the pavers. This VMS is can be placed on a pervious or impervious surface and used with or without mortar.</p>
+            <p><a href="docs/MODULAR PAVING UNITS.pdf" target="_blank">Information Sheet</a></p>
+            <p>If using with a strong post guardrail refer to the STRONG POST GUARDRAIL USE WITH RIGID VMS MATERIALS <a href="docs/STRONG POST GUARDRAIL.pdf" target="_blank">information sheet</a> for leave-out compliance requirements.</p>
+          </div>
+        </div>
+
+          <div class="rct-comp-div rct-method-card" style="display:none" id="IrrigatedOrnaID">
+          <div class="rct-card-img"><a href="docs/IRRIGATED ORNAMENTAL VEGETATION.pdf" target="_blank"><img src="images/ref/img24aa.png" /></a></div>
+          <div class="rct-card-txt">
+            <h3>Irrigated Ornamental Vegetation</h3><br/>
+            <p>Irrigated ornamental vegetation is generally used in urban and suburban locations where there are greater stakeholder expectations for aesthetics. Vegetation is chosen for specific qualities such as maximum height and ability to out compete weeds. The benefits include erosion control, stormwater runoff infiltration and landscape enhancement. The limitation of this VMS is the required maintenance over its life cycle.</p>
+            <p><a href="docs/IRRIGATED ORNAMENTAL VEGETATION.pdf" target="_blank">Information Sheet</a></p>
+          </div>
+        </div>
+
+
+        <div class="rct-comp-div rct-method-card" style="display:none" id="rubberID">
+          <div class="rct-card-img"><a href="docs/RUBBER WEED MAT.pdf" target="_blank"><img src="images/ref/img12aa.png" /></a></div>
+          <div class="rct-card-txt">
+            <h3>Rubber Weed Mat</h3><br/>
+            <p>Rubber weed mats consist of recycled rubber tires adhered together with a resin. Cutouts are often provided for post placement. This VMS comes in various colors. The material is easily installed; however, the process is time consuming. Therefore, worker exposure to traffic and other roadway hazards is greater.</p>
+            <p><a href="docs/RUBBER WEED MAT.pdf" target="_blank">Information Sheet</a></p>
+          </div>
+        </div>
+
+        <div class="rct-comp-div rct-method-card" style="display:none" id="crmcreteID">
+          <div class="rct-card-img"><a href="docs/CRMCrete.pdf" target="_blank"><img src="images/ref/crmcrete.png" /></a></div>
+          <div class="rct-card-txt">
+            <h3>Crumb Rubber Modified Concrete</h3><br/>
+            <p>Crumb rubber modified concrete or CRMCrete is a concrete-based product using a slurry blend of recycled scrap tire crumb rubber material and homopolymer polypropylene high performance reinforcing fibers. The CRMCrete weed barrier system is installed similar to concrete and can be used with color and texture for increased aesthetic value.</p>
+            <p><a href="docs/CRMCrete.pdf" target="_blank">Information Sheet</a></p>
+            <p>If using with a strong post guardrail refer to the STRONG POST GUARDRAIL USE WITH RIGID VMS MATERIALS <a href="docs/STRONG POST GUARDRAIL.pdf" target="_blank">information sheet</a> for leave-out compliance requirements.</p>
+          </div>
+        </div>
+
+        <div class="rct-comp-div rct-method-card" style="display:none" id="culletID">
+          <div class="rct-card-img"><a href="docs/CULLET.pdf" target="_blank"><img src="images/ref/culletaa.png" /></a></div>
+          <div class="rct-card-txt">
+            <h3>Glass Cullet</h3><br/>
+            <p>Crushed glass (cullet) particles are generally angular in shape and can contain some flat and elongated particles depending on the degree of processing (i.e., crushing). This is used similar to other aggregate materials. Available in variety of colors.</p>
+            <p><a href="docs/CULLET.pdf" target="_blank">Information Sheet</a></p>
+          </div>
+        </div>
+
+
+
+        <div class="rct-comp-div rct-method-card" style="display:none" id="gccmID">
+          <div class="rct-card-img"><a href="docs/GCCM.pdf" target="_blank"><img src="images/ref/gccm.png" /></a></div>
+          <div class="rct-card-txt">
+            <h3>Geosynthetic Cementitious Composite Mats (GCCMs)</h3><br/>
+            <p>GCCM is a flexible cement-impregnated fabric that hardens when hydrated to form a thin, durable concrete layer. This material has different proprietary name such as Concrete Cloth™ and Concrete Canvas®. This VMS consists of a dry concrete mix, reinforcing fiber matrix, fabric top surface and poly vinyl chloride (PVC) bottom coating for waterproofing.</p>
+            <p><a href="docs/GCCM.pdf" target="_blank">Information Sheet</a></p>
+            <p>If using with a strong post guardrail refer to the STRONG POST GUARDRAIL USE WITH RIGID VMS MATERIALS <a href="docs/STRONG POST GUARDRAIL.pdf" target="_blank">information sheet</a> for leave-out compliance requirements.</p>
+          </div>
+        </div>
+
+
+        <div class="rct-comp-div rct-method-card" style="display:none" id="selectID">
+          <div class="rct-card-img"><a href="docs/NATIVE AND NON.pdf" target="_blank"><img src="images/ref/img23ac.png" /></a></div>
+          <div class="rct-card-txt">
+            <h3>Native/Non-Irrigated Vegetation</h3><br/>
+            <p>Native/Non-Irrigated vegetation consists of low growing species that out compete undesired vegetation. This may include irrigated ornamental, and non-irrigated native and/or non-native vegetation. This VMS allows for stormwater infiltration. Worker exposure is high for installation and maintenance due to factors such as site preparation and hand planting. The plant establishment period is subject to increased maintenance.</p>
+            <p><a href="docs/NATIVE AND NON.pdf" target="_blank">Information Sheet</a></p>
+          </div>
+        </div>
+        <div class="rct-comp-div rct-method-card" style="display:none" id="organID">
+          <div class="rct-card-img"><a href="docs/ORGANIC MULCH.pdf" target="_blank"><img src="images/ref/img15ab.png" /></a></div>
+          <div class="rct-card-txt">
+            <h3>Organic Mulch</h3><br/>
+            <p>This VMS consists of surface applied, mulched recycled materials such as chipped wood and bark. Mulch allows for stormwater infiltration. Debris from clearing operations may provide a cost-effective source. However, this VMS has a limited longevity of 2 to 3 years. Organic mulch may not be suitable in areas subject to fire hazards.</p>
+            <p><a href="docs/ORGANIC MULCH.pdf" target="_blank">Information Sheet</a></p>
+          </div>
+        </div>
+      </div>
+        
+    </div>
+    
+
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-1.11.3.min.js"></script>
+
+    <script src="lib/accounting.min.js"></script>
+
+    <script src="js/array.js"></script>
+    <script src="js/eachify.js"></script>
+    <script src="js/dom.js"></script>
+    <script src="js/csvjson.js"></script>
+    <script src="js/bootup.js?v=20160525"></script>
+    <!-- Load React. -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+
+    <script src="js/papaparse.min.js"></script>
+    <!-- Load our React component. -->
+    <!-- <script src="js/control-filter.js"></script> -->
+
+    <script>
+
+        function updator() {
+
+          // Options for selection tool
+          var option1 = document.getElementById("treatmentSelect").value;
+          var option2 = document.getElementById("aestheticSelect").value;
+          var option3 = document.getElementById("constructionSelect").value;
+          
+
+          // Create components based on selection
+var carrierBaRNC = ["Standard Concrete Pavement",
+"Minor Concrete Pavement",
+"Asphalt Concrete Pavement",
+"Native/Non-Irrigated Vegetation",
+"Asphalt Composite",
+"Recycled Asphalt Millings",
+"Aggregate Base",
+"Rubber Weed Mat",
+"Weed Control Fiber Mat",
+"Geosynthetic Cementitious Composite Mats",
+"Cullet",
+"Crumb Rubber Modified Concrete"];
+
+
+var carrierBaUNC = ["Standard Concrete Pavement",
+"Minor Concrete Pavement",
+"Native/Non-Irrigated Vegetation",
+"Patterned Concrete Pavement",
+"Asphalt Composite",
+"Rubber Weed Mat",
+"Aggregate Base",
+"Weed Control Fiber Mat",
+"Geosynthetic Cementitious Composite Mats",
+"Cullet",
+"Crumb Rubber Modified Concrete"];
+
+
+var carrierBaRRE = [
+"Native/Non-Irrigated Vegetation",
+"Recycled Asphalt Millings",
+"Aggregate Base",
+"Rubber Weed Mat",
+"Weed Control Fiber Mat",
+"Asphalt Composite",
+"Geosynthetic Cementitious Composite Mats",
+"Cullet"
+];
+
+
+var carrierBaURE = ["Native/Non-Irrigated Vegetation",
+"Aggregate Base",
+"Rubber Weed Mat",
+"Weed Control Fiber Mat",
+"Asphalt Composite",
+"Geosynthetic Cementitious Composite Mats",
+"Cullet"
+];
+
+
+
+var SignPoRNC = ["Standard Concrete Pavement",
+"Minor Concrete Pavement",
+"Asphalt Concrete Pavement",
+"Asphalt Composite",
+"Aggregate Base",
+"Rubber Weed Mat",
+"Weed Control Fiber Mat",
+"Gravel Mulch",
+"Rock Blanket",
+"Herbicidal Geofabric",
+"Geosynthetic Cementitious Composite Mats",
+"Cullet",
+"Crumb Rubber Modified Concrete"
+];
+ 
+
+var SignPoUNC = ["Standard Concrete Pavement",
+"Minor Concrete Pavement",
+"Modular Paving Units",
+"Rubber Weed Mat",
+"Weed Control Fiber Mat",
+"Gravel Mulch",
+"Rock Blanket",
+"Stamped Asphalt Pavement",
+"Patterned Concrete Pavement",
+"Herbicidal Geofabric",
+"Aggregate Base",
+"Geosynthetic Cementitious Composite Mats",
+"Cullet",
+"Crumb Rubber Modified Concrete"
+];
+          
+ var SignPoRRE = ["Asphalt Composite",
+"Rubber Weed Mat",
+"Weed Control Fiber Mat",
+"Gravel Mulch",
+"Rock Blanket",
+"Aggregate Base",
+"Geosynthetic Cementitious Composite Mats",
+"Cullet"];
+          
+ var SignPoURE = [
+"Modular Paving Units",
+"Rubber Weed Mat",
+"Weed Control Fiber Mat",
+"Gravel Mulch",
+"Rock Blanket",
+"Aggregate Base",
+"Geosynthetic Cementitious Composite Mats",
+"Cullet"];
+
+
+
+
+
+var edgePaRNC = ["Standard Concrete Pavement",
+"Minor Concrete Pavement",
+"Asphalt Concrete Pavement",
+"Recycled Asphalt Millings",
+"Aggregate Base",
+"Gravel Mulch",
+"Cullet",
+"Native/Non-Irrigated Vegetation",
+"Crumb Rubber Modified Concrete"
+];
+         
+
+var edgePaUNC = ["Standard Concrete Pavement",
+"Minor Concrete Pavement",
+"Asphalt Concrete Pavement",
+"Recycled Asphalt Millings",
+"Patterned Concrete Pavement",
+"Stamped Asphalt Pavement",
+"Aggregate Base",
+"Gravel Mulch",
+"Cullet",
+"Native/Non-Irrigated Vegetation",
+"Crumb Rubber Modified Concrete"];
+          
+var edgePaRRE = ["Standard Concrete Pavement",
+"Minor Concrete Pavement",
+"Asphalt Concrete Pavement",
+"Recycled Asphalt Millings",
+"Aggregate Base",
+"Gravel Mulch",
+"Native/Non-Irrigated Vegetation",
+"Cullet"];
+          
+var edgePaURE = ["Standard Concrete Pavement",
+"Minor Concrete Pavement",
+"Asphalt Concrete Pavement",
+"Recycled Asphalt Millings",
+"Gravel Mulch",
+"Aggregate Base",
+"Native/Non-Irrigated Vegetation",
+"Cullet"];
+
+
+
+
+var goreMeRNC = ["Standard Concrete Pavement",
+"Minor Concrete Pavement",
+"Asphalt Concrete Pavement",
+"Asphalt Composite",
+"Aggregate Base",
+"Gravel Mulch",
+"Rock Blanket",
+"Herbicidal Geofabric",
+"Organic Mulch",
+"Rock Slope Protection",
+"Native/Non-Irrigated Vegetation",
+"Geosynthetic Cementitious Composite Mats",
+"Cullet",
+"Crumb Rubber Modified Concrete"
+];
+          
+ var goreMeUNC = ["Standard Concrete Pavement",
+"Minor Concrete Pavement",
+"Irrigated Ornamental Vegetation",
+"Modular Paving Units",
+"Gravel Mulch",
+"Rock Blanket",
+"Aggregate Base",
+"Herbicidal Geofabric",
+"Native/Non-Irrigated Vegetation",
+"Organic Mulch",
+"Stamped Asphalt Pavement",
+"Patterned Concrete Pavement",
+"Geosynthetic Cementitious Composite Mats",
+"Cullet",
+"Crumb Rubber Modified Concrete"
+];
+         
+var goreMeRRE = ["Standard Concrete Pavement",
+"Minor Concrete Pavement",
+"Asphalt Composite",
+"Aggregate Base",
+"Gravel Mulch",
+"Rock Blanket",
+"Organic Mulch",
+"Rock Slope Protection",
+"Native/Non-Irrigated Vegetation",
+"Geosynthetic Cementitious Composite Mats",
+"Cullet"
+];
+          
+var goreMeURE = ["Standard Concrete Pavement",
+"Minor Concrete Pavement",
+"Modular Paving Units",
+"Irrigated Ornamental Vegetation",
+"Aggregate Base",
+"Gravel Mulch",
+"Rock Blanket",
+"Native/Non-Irrigated Vegetation",
+"Organic Mulch",
+"Stamped Asphalt Pavement",
+"Patterned Concrete Pavement",
+"Geosynthetic Cementitious Composite Mats",
+"Cullet"
+];
+
+
+
+
+var guardrailRNC = ["Standard Concrete Pavement",
+"Minor Concrete Pavement",
+"Asphalt Concrete Pavement",
+"Native/Non-Irrigated Vegetation",
+"Asphalt Composite",
+"Recycled Asphalt Millings",
+"Aggregate Base",
+"Rubber Weed Mat",
+"Weed Control Fiber Mat",
+"Herbicidal Geofabric",
+"Geosynthetic Cementitious Composite Mats",
+"Cullet",
+"Crumb Rubber Modified Concrete"];
+          
+var guardrailUNC = ["Standard Concrete Pavement",
+"Minor Concrete Pavement",
+"Native/Non-Irrigated Vegetation",
+"Patterned Concrete Pavement",
+"Rubber Weed Mat",
+"Weed Control Fiber Mat",
+"Herbicidal Geofabric",
+"Geosynthetic Cementitious Composite Mats",
+"Cullet",
+"Crumb Rubber Modified Concrete"
+];
+          
+var guardrailRRE = [
+"Native/Non-Irrigated Vegetation",
+"Recycled Asphalt Millings",
+"Aggregate Base",
+"Rubber Weed Mat",
+"Asphalt Composite",
+"Weed Control Fiber Mat",
+"Geosynthetic Cementitious Composite Mats",
+"Cullet"
+];
+          
+ var guardrailURE = [
+"Native/Non-Irrigated Vegetation",
+"Rubber Weed Mat",
+"Weed Control Fiber Mat",
+"Geosynthetic Cementitious Composite Mats",
+"Cullet"
+];
+
+
+
+
+var mowEdgeRNC = ["Standard Concrete Pavement",
+"Minor Concrete Pavement",
+"Asphalt Concrete Pavement",
+"Asphalt Composite",
+"Recycled Asphalt Millings",
+"Aggregate Base",
+"Herbicidal Geofabric",
+"Geosynthetic Cementitious Composite Mats",
+"Crumb Rubber Modified Concrete"
+];
+
+var mowEdgeUNC = ["Standard Concrete Pavement",
+"Minor Concrete Pavement",
+"Aggregate Base",
+"Stamped Asphalt Pavement",
+"Modular Paving Units",
+"Patterned Concrete Pavement",
+"Geosynthetic Cementitious Composite Mats",
+"Crumb Rubber Modified Concrete"
+];
+
+var mowEdgeRRE = ["Standard Concrete Pavement",
+"Minor Concrete Pavement",
+"Asphalt Concrete Pavement",
+"Asphalt Composite",
+"Recycled Asphalt Millings",
+"Aggregate Base",
+"Stamped Asphalt Pavement",
+"Herbicidal Geofabric",
+"Geosynthetic Cementitious Composite Mats"
+];
+
+var mowEdgeURE = ["Standard Concrete Pavement",
+"Minor Concrete Pavement",
+"Aggregate Base",
+"Modular Paving Units",
+"Patterned Concrete Pavement",
+"Herbicidal Geofabric",
+"Geosynthetic Cementitious Composite Mats"
+];
+
+
+
+          
+var slopeEmbRNC = ["Standard Concrete Pavement",
+"Minor Concrete Pavement",
+"Rock Blanket",
+"Rock Slope Protection",
+"Native/Non-Irrigated Vegetation",
+"Herbicidal Geofabric",
+"Aggregate Base",
+"Organic Mulch",
+"Gravel Mulch",
+"Geosynthetic Cementitious Composite Mats"
+];
+
+var slopeEmbUNC = ["Standard Concrete Pavement",
+"Minor Concrete Pavement",
+"Modular Paving Units",
+"Rock Blanket",
+"Patterned Concrete Pavement",
+"Irrigated Ornamental Vegetation",
+"Herbicidal Geofabric",
+"Organic Mulch",
+"Aggregate Base",
+"Gravel Mulch",
+"Native/Non-Irrigated Vegetation",
+"Geosynthetic Cementitious Composite Mats"
+];
+
+var slopeEmbRRE = ["Standard Concrete Pavement",
+"Minor Concrete Pavement",
+"Rock Slope Protection",
+"Rock Blanket",
+"Organic Mulch",
+"Aggregate Base",
+"Gravel Mulch",
+"Native/Non-Irrigated Vegetation",
+"Geosynthetic Cementitious Composite Mats"
+];
+
+var slopeEmbURE = ["Standard Concrete Pavement",
+"Minor Concrete Pavement",
+"Rock Blanket",
+"Gravel Mulch",
+"Organic Mulch",
+"Modular Paving Units",
+"Aggregate Base",
+"Irrigated Ornamental Vegetation",
+"Native/Non-Irrigated Vegetation",
+"Geosynthetic Cementitious Composite Mats"
+];
+
+
+
+
+
+          // Hide all the block rockSlopeID
+          document.getElementById("standardID").style.display = 'none';
+          document.getElementById("minorID").style.display = 'none';
+          document.getElementById("asphID").style.display = 'none';
+          document.getElementById("asphConcreteID").style.display = 'none';
+          document.getElementById("stampedAsphID").style.display = 'none';
+          document.getElementById("patternedID").style.display = 'none';
+          document.getElementById("weedControlID").style.display = 'none';
+          document.getElementById("recycledAsphID").style.display = 'none';
+          document.getElementById("rockBlanketID").style.display = 'none';
+          document.getElementById("gravelMuID").style.display = 'none';
+          document.getElementById("rockSlopeID").style.display = 'none';
+          document.getElementById("agregateID").style.display = 'none';
+          document.getElementById("rubberID").style.display = 'none';
+          document.getElementById("selectID").style.display = 'none';
+          document.getElementById("organID").style.display = 'none';
+          document.getElementById("ModularPaveID").style.display = 'none';
+          document.getElementById("IrrigatedOrnaID").style.display = 'none';
+          document.getElementById("crmcreteID").style.display = 'none';
+          document.getElementById("culletID").style.display = 'none';         
+          document.getElementById("gccmID").style.display = 'none';
+
+          if (option1 != "" && option2 != "" && option3 != "") {
+            
+            // console.log("Picked: " + option1 + " " + option2 + " " + option3);
+            // Depending on selection
+            if (option1 == "Median Cable Barrier") {
+              console.log("inside");
+              if (option2 == "Standard" && option3 == "New Construction") {carrierBaRNC.forEach(creationFunc);}
+              if (option2 == "Standard" && option3 == "Retrofit") {carrierBaRRE.forEach(creationFunc);}
+              if (option2 == "High" && option3 == "New Construction") {carrierBaUNC.forEach(creationFunc);}
+              if (option2 == "High" && option3 == "Retrofit") {carrierBaURE.forEach(creationFunc);}
+            }
+
+            if (option1 == "Sign Posts") {
+              console.log("inside");
+              if (option2 == "Standard" && option3 == "New Construction") {SignPoRNC.forEach(creationFunc);}
+              if (option2 == "Standard" && option3 == "Retrofit") {SignPoRRE.forEach(creationFunc);}
+              if (option2 == "High" && option3 == "New Construction") {SignPoUNC.forEach(creationFunc);}
+              if (option2 == "High" && option3 == "Retrofit") {SignPoURE.forEach(creationFunc);}
+            }
+
+            if (option1 == "Edge of Pavement") {
+              console.log("inside2");
+              if (option2 == "Standard" && option3 == "New Construction") {edgePaRNC.forEach(creationFunc);}
+              if (option2 == "Standard" && option3 == "Retrofit") {edgePaRRE.forEach(creationFunc);}
+              if (option2 == "High" && option3 == "New Construction") {edgePaUNC.forEach(creationFunc);}
+              if (option2 == "High" && option3 == "Retrofit") {edgePaURE.forEach(creationFunc);}
+            }
+            if (option1 == "Gore/Median") {
+              console.log("inside3");
+              if (option2 == "Standard" && option3 == "New Construction") {goreMeRNC.forEach(creationFunc);}
+              if (option2 == "Standard" && option3 == "Retrofit") {goreMeRRE.forEach(creationFunc);}
+              if (option2 == "High" && option3 == "New Construction") {goreMeUNC.forEach(creationFunc);}
+              if (option2 == "High" && option3 == "Retrofit") {goreMeURE.forEach(creationFunc);}
+            }
+            if (option1 == "Guardrail") {
+              console.log("inside4");
+              if (option2 == "Standard" && option3 == "New Construction") {guardrailRNC.forEach(creationFunc);}
+              if (option2 == "Standard" && option3 == "Retrofit") {guardrailRRE.forEach(creationFunc);}
+              if (option2 == "High" && option3 == "New Construction") {guardrailUNC.forEach(creationFunc);}
+              if (option2 == "High" && option3 == "Retrofit") {guardrailURE.forEach(creationFunc);}
+            }
+            if (option1 == "Mow Edge") {
+              console.log("inside5");
+              if (option2 == "Standard" && option3 == "New Construction") {mowEdgeRNC.forEach(creationFunc);}
+              if (option2 == "Standard" && option3 == "Retrofit") {mowEdgeRRE.forEach(creationFunc);}
+              if (option2 == "High" && option3 == "New Construction") {mowEdgeUNC.forEach(creationFunc);}
+              if (option2 == "High" && option3 == "Retrofit") {mowEdgeURE.forEach(creationFunc);}
+            }
+            if (option1 == "Slope Embankment") {
+              console.log("inside6");
+              if (option2 == "Standard" && option3 == "New Construction") {slopeEmbRNC.forEach(creationFunc);}
+              if (option2 == "Standard" && option3 == "Retrofit") {slopeEmbRRE.forEach(creationFunc);}
+              if (option2 == "High" && option3 == "New Construction") {slopeEmbUNC.forEach(creationFunc);}
+              if (option2 == "High" && option3 == "Retrofit") {slopeEmbURE.forEach(creationFunc);}
+            }
+          }      
+        }
+
+        // homemade parser
+        function creationFunc(value) {
+
+          console.log("creation function: " + value);
+          
+          var standard = "Standard Concrete Pavement";
+          var minorConcrete = "Minor Concrete Pavement";
+          var asphaltCom = "Asphalt Composite";
+          var asphaltConcrete = "Asphalt Concrete Pavement";
+          var stamped = "Stamped Asphalt Pavement";
+          var patterned = "Patterned Concrete Pavement";
+          var weedControl = "Weed Control Fiber Mat";
+          var recycled = "Recycled Asphalt Millings";
+          var rockBlanket = "Rock Blanket";
+          var gravelMu = "Gravel Mulch";
+          var rockSlope = "Rock Slope Protection";
+          var aggregate = "Aggregate Base";
+          var rubber = "Rubber Weed Mat";
+          var selectVeg = "Native/Non-Irrigated Vegetation";
+          var orgMun = "Organic Mulch";
+          var modPave = "Modular Paving Units";
+          var irrOrna = "Irrigated Ornamental Vegetation";    
+          var crmcrete = "Crumb Rubber Modified Concrete";   
+          var cullet = "Cullet";   
+          var gccm = "Geosynthetic Cementitious Composite Mats";               
+
+          if (value == standard) {document.getElementById("standardID").style.display = 'block';}
+          if (value == minorConcrete) {document.getElementById("minorID").style.display = 'block';}
+          if (value == asphaltCom) {document.getElementById("asphID").style.display = 'block';}
+          if (value == asphaltConcrete) {document.getElementById("asphConcreteID").style.display = 'block';}
+          if (value == stamped) {document.getElementById("stampedAsphID").style.display = 'block';}
+          if (value == patterned) {document.getElementById("patternedID").style.display = 'block';}
+          if (value == weedControl) {document.getElementById("weedControlID").style.display = 'block';}
+          if (value == recycled) {document.getElementById("recycledAsphID").style.display = 'block';}
+          if (value == rockBlanket) {document.getElementById("rockBlanketID").style.display = 'block';}
+          if (value == gravelMu) {document.getElementById("gravelMuID").style.display = 'block';}
+          if (value == rockSlope) {document.getElementById("rockSlopeID").style.display = 'block';}
+          if (value == aggregate) {document.getElementById("agregateID").style.display = 'block';}
+          if (value == rubber) {document.getElementById("rubberID").style.display = 'block';}
+          if (value == crmcrete) {document.getElementById("crmcreteID").style.display = 'block';}
+          if (value == cullet) {document.getElementById("culletID").style.display = 'block';}
+          if (value == gccm) {document.getElementById("gccmID").style.display = 'block';}
+          if (value == selectVeg) {document.getElementById("selectID").style.display = 'block';}
+          if (value == orgMun) {document.getElementById("organID").style.display = 'block';}
+          if (value == modPave) {document.getElementById("ModularPaveID").style.display = 'block';}
+          if (value == irrOrna) {document.getElementById("IrrigatedOrnaID").style.display = 'block';}
+
+
+        }
+
+      </script>
+</body>
+</html>
