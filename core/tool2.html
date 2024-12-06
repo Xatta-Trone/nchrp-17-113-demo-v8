@@ -512,8 +512,23 @@
             });
         }
 
+        // debouncer
+        var debounceTimer;
+       $('#customKeyword').on('input', function() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(function() {
+                updateSelections();
+            }, 300); // Adjust the debounce time as necessary
+        });
+
         $("#customSearchBtn").on("click", function () {
+          updateSelections();
+          
+        });
+
+        function updateSelections(){
           const keyword = $("#customKeyword").val();
+          console.log(keyword)
 
           const ssah = new Set();
           const fa = new Set();
@@ -521,7 +536,7 @@
           const at = new Set();
           const eq = new Set();
 
-          if (keyword === "") {
+          if (keyword === "" || keyword.length === 0) {
             data.forEach((item) => {
               ssah.add(item["SSA Hierarchy"]);
               fa.add(item["Emphasis Area"]);
@@ -546,13 +561,16 @@
             });
           }
 
+          console.log(ssah)
+
           // Update the Target Crash and Area Type dropdowns with filtered options
           updateSelect("#SSAHierarchy", ssah);
           updateSelect("#focusArea", fa);
           updateSelect("#targetCrash", tc);
           updateSelect("#areaType", at);
           // updateSelect("#equity", eq);
-        });
+
+        }
 
         // Function to update Target Crash and Area Type options based on Emphasis Area selection
         $("#SSAHierarchy").on("change", function () {
