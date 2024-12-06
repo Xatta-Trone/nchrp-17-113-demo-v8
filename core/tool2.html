@@ -550,7 +550,7 @@
               (item) => item["SSA Element"] === keyword
             );
 
-            console.log(filteredData);
+            console.log(filteredData.length);
 
             filteredData.forEach((item) => {
               ssah.add(item["SSA Hierarchy"]);
@@ -589,12 +589,17 @@
               // eq.add(item["Equity"]);
             });
           } else {
+            let filteredData = [];
+            if(keyword.length > 0){
+              filteredData = data.filter((item) => (item["SSA Element"].toLowerCase() === keyword.toLowerCase().trim()));
+            }
+            console.log(keyword,filteredData);
             // Filter data for the selected Emphasis Area
-            const filteredData = data.filter(
+            filteredData = filteredData.filter(
               (item) => item["SSA Hierarchy"] === selectedSSAHierarchy
             );
 
-            console.log(filteredData);
+            console.log(keyword, selectedSSAHierarchy, filteredData);
 
             filteredData.forEach((item) => {
               fa.add(item["Emphasis Area"]);
@@ -627,14 +632,20 @@
               // eq.add(item["Equity"]);
             });
           } else {
+            let filteredData  = [];
+            if(keyword.length > 0){
+              filteredData = data.filter((item) => (item["SSA Element"].toLowerCase() === keyword.toLowerCase().trim()));
+            }
             // Filter data for the selected Emphasis Area
-            const filteredData = data.filter(
+            filteredData = filteredData.filter(
               (item) =>
                 item["Emphasis Area"] === selectedFocusArea &&
                 item["SSA Hierarchy"] === selectedSSAHierarchy
             );
 
-            console.log(filteredData);
+            
+
+            console.log(filteredData.length);
 
             filteredData.forEach((item) => {
               tc.add(item["Target Crash Type"]);
@@ -666,8 +677,12 @@
               // eq.add(item["Equity"]);
             });
           } else {
+            let filteredData  = [];
+            if(keyword.length > 0){
+              filteredData = data.filter((item) => (item["SSA Element"].toLowerCase() === keyword.toLowerCase().trim()));
+            }
             // Filter data for the selected Emphasis Area
-            const filteredData = data.filter(
+            filteredData = filteredData.filter(
               (item) =>
                 item["SSA Hierarchy"] === selectedSSAHierarchy &&
                 item["Target Crash Type"] === selectedTC &&
@@ -968,22 +983,56 @@
           const areaType = $("#areaType").val().toLowerCase();
           // const equity = $("#equity").val().toLowerCase();
 
-          let filteredData = data
-            .filter((item) => {
-              return (
-                (!keyword ||
-                  item["SSA Element"].toLowerCase() === keyword) &&
-                (!SSAHierarchy ||
-                  item["SSA Hierarchy"].toLowerCase() === SSAHierarchy) &&
-                (!focusArea ||
-                  item["Emphasis Area"].toLowerCase() === focusArea) &&
-                (!targetCrash ||
-                  item["Target Crash Type"].toLowerCase() === targetCrash) &&
-                (!areaType || item["Land Use Type"].toLowerCase() === areaType) 
-                // && (!equity || item["Equity"].toLowerCase() === equity)
-              );
-            })
-            .sort((a, b) => {
+          console.log(keyword,SSAHierarchy,focusArea,targetCrash,areaType)
+
+          let filteredData = [];
+
+          if(keyword.length > 0){
+            filteredData = data.filter((item) => (item["SSA Element"].toLowerCase() === keyword));
+          }
+
+          console.log(filteredData);
+
+          if(SSAHierarchy.length > 0){
+            filteredData = filteredData.filter((item) => (item["SSA Hierarchy"].toLowerCase() === SSAHierarchy));
+          }
+          console.log(filteredData);
+
+          if(focusArea.length > 0){
+            filteredData = filteredData.filter((item) => (item["Emphasis Area"].toLowerCase() === focusArea));
+          }
+          console.log(filteredData);
+
+          if(targetCrash.length > 0){
+            filteredData = filteredData.filter((item) => (item["Target Crash Type"].toLowerCase() === targetCrash));
+          }
+          console.log(filteredData);
+
+          if(areaType.length > 0){
+            filteredData = filteredData.filter((item) => (item["Land Use Type"].toLowerCase() === areaType));
+          }
+          console.log(filteredData);
+
+
+
+          // let filteredData = data
+          //   .filter((item) => {
+          //     return (
+          //       (!keyword ||
+          //         item["SSA Element"].toLowerCase() === keyword) &&
+          //       (!SSAHierarchy ||
+          //         item["SSA Hierarchy"].toLowerCase() === SSAHierarchy) &&
+          //       (!focusArea ||
+          //         item["Emphasis Area"].toLowerCase() === focusArea) &&
+          //       (!targetCrash ||
+          //         item["Target Crash Type"].toLowerCase() === targetCrash) &&
+          //       (!areaType || item["Land Use Type"].toLowerCase() === areaType) 
+          //       // && (!equity || item["Equity"].toLowerCase() === equity)
+          //     );
+          //   })
+
+
+           filteredData = filteredData.sort((a, b) => {
               // Place items with a "CMF" value (not empty, null, or undefined) first, then sort by CMF from low to high
               if (a.CMF && !b.CMF) return -1;
               if (!a.CMF && b.CMF) return 1;
