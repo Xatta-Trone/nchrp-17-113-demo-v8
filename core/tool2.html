@@ -475,8 +475,8 @@
             focusAreas.add(item["Emphasis Area"]);
             targetCrashes.add(item["Target Crash Type"]);
             areaTypes.add(item["Land Use Type"]);
-            SSAPillars.add(item["SSA Pillars"]);
-            // equity.add(item["Equity Consideration"]);
+            SSAPillars.add(item["SSA Element"]);
+            // equity.add(item["Equity"]);
           });
 
           updateSelect("#SSAHierarchy", SSAHierarchy);
@@ -527,12 +527,12 @@
               fa.add(item["Emphasis Area"]);
               tc.add(item["Target Crash Type"]);
               at.add(item["Land Use Type"]);
-              // eq.add(item["Equity Consideration"]);
+              // eq.add(item["Equity"]);
             });
           } else {
             // Filter data for the selected Emphasis Area
             const filteredData = data.filter(
-              (item) => item["SSA Pillars"] === keyword
+              (item) => item["SSA Element"] === keyword
             );
 
             console.log(filteredData);
@@ -542,7 +542,7 @@
               fa.add(item["Emphasis Area"]);
               tc.add(item["Target Crash Type"]);
               at.add(item["Land Use Type"]);
-              // eq.add(item["Equity Consideration"]);
+              // eq.add(item["Equity"]);
             });
           }
 
@@ -568,7 +568,7 @@
               fa.add(item["Emphasis Area"]);
               tc.add(item["Target Crash Type"]);
               at.add(item["Land Use Type"]);
-              // eq.add(item["Equity Consideration"]);
+              // eq.add(item["Equity"]);
             });
           } else {
             // Filter data for the selected Emphasis Area
@@ -582,7 +582,7 @@
               fa.add(item["Emphasis Area"]);
               tc.add(item["Target Crash Type"]);
               at.add(item["Land Use Type"]);
-              // eq.add(item["Equity Consideration"]);
+              // eq.add(item["Equity"]);
             });
           }
 
@@ -606,7 +606,7 @@
             data.forEach((item) => {
               tc.add(item["Target Crash Type"]);
               at.add(item["Land Use Type"]);
-              // eq.add(item["Equity Consideration"]);
+              // eq.add(item["Equity"]);
             });
           } else {
             // Filter data for the selected Emphasis Area
@@ -621,7 +621,7 @@
             filteredData.forEach((item) => {
               tc.add(item["Target Crash Type"]);
               at.add(item["Land Use Type"]);
-              // eq.add(item["Equity Consideration"]);
+              // eq.add(item["Equity"]);
             });
           }
 
@@ -645,7 +645,7 @@
           if (selectedTC === "") {
             data.forEach((item) => {
               at.add(item["Land Use Type"]);
-              // eq.add(item["Equity Consideration"]);
+              // eq.add(item["Equity"]);
             });
           } else {
             // Filter data for the selected Emphasis Area
@@ -660,7 +660,7 @@
 
             filteredData.forEach((item) => {
               at.add(item["Land Use Type"]);
-              // eq.add(item["Equity Consideration"]);
+              // eq.add(item["Equity"]);
             });
           }
 
@@ -757,8 +757,8 @@
                     <p><strong>Type:</strong> ${
                       topItem["Countermeasure Type"] || "N/A"
                     }</p>
-                    <p><strong>SSA Pillar:</strong> ${
-                      topItem["SSA Pillars"] || "N/A"
+                    <p><strong>SSA Element:</strong> ${
+                      topItem["SSA Element"] || "N/A"
                     }</p>
                     <p><strong>TZD:</strong> ${topItem["AASHTO"] || "N/A"}</p>
                     <p><strong>SSA Hierarchy:</strong> ${
@@ -773,9 +773,7 @@
                     <p><strong>Land Use Type:</strong> ${
                       topItem["Land Use Type"] || "N/A"
                     }</p>
-                    <p><strong>Equity:</strong> ${
-                      topItem["Equity Consideration"] || "N/A"
-                    }</p>
+                   
                     <p><strong>Contributing Factors:</strong> ${
                       topItem["Contributing Factors"] || "N/A"
                     }</p>
@@ -791,13 +789,16 @@
                         <p><strong>CMF:</strong> ${
                           cmfRange.maxCMF && cmfRange.minCMF
                             ? cmfRange.maxCMF !== cmfRange.minCMF
-                              ? `[${cmfRange.minCMF} - ${cmfRange.maxCMF}]  
-                          <span style="color:red">(Note: This is guidance only. States can select their own countermeasures.)</span>`
-                              : `${cmfRange.minCMF}  
-                          <span style="color:red">(Note: This is guidance only. States can select their own countermeasures.)</span>`
+                              ? `[${cmfRange.minCMF} - ${cmfRange.maxCMF}]`
+                              : `${cmfRange.minCMF}`
                             : "N/A"
                         }
                         </p>
+                         <p><strong>Equity:</strong> ${
+                          topItem["Equity"] || "N/A"
+                        }</p>
+                        <span style="color:red">Note: This is guidance only. States can select their own countermeasures.</span>
+
                         <p  style="margin-top: 15px; margin-bottom: 15px;">
                           <a href="#" data-toggle="modal" data-target="#flipFlop" style="background-color:lightgray;display:inline-block;padding:5px 10px;color:black;">CMF Clearinghouse</a>
                           <a href="#" data-toggle="modal" data-target="#flipFlop" style="background-color:lightblue;display:inline-block;padding:5px 10px;color:black;">Knowledge Base</a>
@@ -953,7 +954,7 @@
             .filter((item) => {
               return (
                 (!keyword ||
-                  item["SSA Pillars"].toLowerCase() === keyword) &&
+                  item["SSA Element"].toLowerCase() === keyword) &&
                 (!SSAHierarchy ||
                   item["SSA Hierarchy"].toLowerCase() === SSAHierarchy) &&
                 (!focusArea ||
@@ -961,7 +962,7 @@
                 (!targetCrash ||
                   item["Target Crash Type"].toLowerCase() === targetCrash) &&
                 (!areaType || item["Land Use Type"].toLowerCase() === areaType) 
-                // && (!equity || item["Equity Consideration"].toLowerCase() === equity)
+                // && (!equity || item["Equity"].toLowerCase() === equity)
               );
             })
             .sort((a, b) => {
@@ -1107,7 +1108,7 @@
             "Target Crash Type",
             "Land Use Type",
             "Countermeasure",
-            "SSA Pillars",
+            "SSA Element",
             "SSA Hierarchy",
             "AASHTO",
           ];
