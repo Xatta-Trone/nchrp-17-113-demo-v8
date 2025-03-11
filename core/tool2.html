@@ -589,9 +589,9 @@
               // eq.add(item["Equity"]);
             });
           } else {
-            let filteredData = [];
+            let filteredData = [...data];
             if(keyword.length > 0){
-              filteredData = data.filter((item) => (item["SSA Element"].toLowerCase() === keyword.toLowerCase().trim()));
+              filteredData = filteredData.filter((item) => (item["SSA Element"].toLowerCase() === keyword.toLowerCase().trim()));
             }
             console.log(keyword,filteredData);
             // Filter data for the selected Emphasis Area
@@ -632,9 +632,9 @@
               // eq.add(item["Equity"]);
             });
           } else {
-            let filteredData  = [];
+            let filteredData  = [...data];
             if(keyword.length > 0){
-              filteredData = data.filter((item) => (item["SSA Element"].toLowerCase() === keyword.toLowerCase().trim()));
+              filteredData = filteredData.filter((item) => (item["SSA Element"].toLowerCase() === keyword.toLowerCase().trim()));
             }
             // Filter data for the selected Emphasis Area
             filteredData = filteredData.filter(
@@ -677,9 +677,9 @@
               // eq.add(item["Equity"]);
             });
           } else {
-            let filteredData  = [];
+            let filteredData  = [...data];
             if(keyword.length > 0){
-              filteredData = data.filter((item) => (item["SSA Element"].toLowerCase() === keyword.toLowerCase().trim()));
+              filteredData = filteredData.filter((item) => (item["SSA Element"].toLowerCase() === keyword.toLowerCase().trim()));
             }
             // Filter data for the selected Emphasis Area
             filteredData = filteredData.filter(
@@ -985,10 +985,10 @@
 
           console.log(keyword,SSAHierarchy,focusArea,targetCrash,areaType)
 
-          let filteredData = [];
+          let filteredData = [...data];
 
           if(keyword.length > 0){
-            filteredData = data.filter((item) => (item["SSA Element"].toLowerCase() === keyword));
+            filteredData = filteredData.filter((item) => (item["SSA Element"].toLowerCase() === keyword));
           }
 
           console.log(filteredData);
