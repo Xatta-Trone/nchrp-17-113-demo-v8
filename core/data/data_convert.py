@@ -35,7 +35,7 @@ column_mapping = {
     "Countermeasure Factsheet": "Countermeasure Factsheet",
     "Other Countermeasures": "Other Countermeasures",
     "NCHRP 500 Series Objective": "NCHRP 500 Series Objective",
-    "CountermeasureID": "img"
+    # "CountermeasureID": "img"
 }
 
 # Helper function to handle NaN values
