@@ -338,7 +338,36 @@
                 <!-- Checkboxes will be dynamically added here -->
               </div>
             </div>
-                        
+
+            <!-- Custom Search Bar -->
+            <div class="form-group">
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="customKeyword"
+                  placeholder="Search SSA Elements"
+                  list="searchSuggestions"
+                  autocomplete="off"
+                />
+                <span class="input-group-btn">
+                  <button
+                    class="btn bg-blue"
+                    type="button"
+                    id="customSearchBtn"
+                    style="
+                      border-top-left-radius: 0;
+                      border-bottom-left-radius: 0;
+                    "
+                  >
+                    Search
+                  </button>
+                </span>
+                <datalist id="searchSuggestions"> </datalist>
+              </div>
+            </div>
+
+            
             <button type="submit" class="btn btn-primary btn-block">
               Apply Filters
             </button>
@@ -530,7 +559,7 @@
             targetCrashes.add(capitalizeFirst(item["Target Crash Type"]));
             areaTypes.add(capitalizeFirst(item["Land Use Type"]));
             SSAElements.add(capitalizeFirst(item["SSA Element"]));
-            contributingFactors.add(capitalizeFirst(item["Contributing Factors"].split(',')[0].trim()));
+            contributingFactors.add(capitalizeFirst(item["Contributing Factors"]));
             SSAHierarchy.add(capitalizeFirst(item["SSA Hierarchy"]));
           });
 
@@ -594,7 +623,7 @@
           if (selectedFocusArea === "") {
             data.forEach((item) => {
               tc.add(capitalizeFirst(item["Target Crash Type"]));
-              cf.add(capitalizeFirst(item["Contributing Factors"].split(',')[0].trim()));
+              cf.add(capitalizeFirst(item["Contributing Factors"]));
               at.add(capitalizeFirst(item["Land Use Type"]));
               ssae.add(capitalizeFirst(item["SSA Element"]));
               ssah.add(capitalizeFirst(item["SSA Hierarchy"]));
@@ -611,7 +640,7 @@
 
             filteredData.forEach((item) => {
               tc.add(capitalizeFirst(item["Target Crash Type"]));
-              cf.add(capitalizeFirst(item["Contributing Factors"].split(',')[0].trim()));
+              cf.add(capitalizeFirst(item["Contributing Factors"]));
               at.add(capitalizeFirst(item["Land Use Type"]));
               ssae.add(capitalizeFirst(item["SSA Element"]));
               ssah.add(capitalizeFirst(item["SSA Hierarchy"]));
@@ -637,7 +666,7 @@
 
           if (selectedTC === "") {
             data.forEach((item) => {
-              cf.add(capitalizeFirst(item["Contributing Factors"].split(',')[0].trim()));
+              cf.add(capitalizeFirst(item["Contributing Factors"]));
               at.add(capitalizeFirst(item["Land Use Type"]));
               ssae.add(capitalizeFirst(item["SSA Element"]));
               ssah.add(capitalizeFirst(item["SSA Hierarchy"]));
@@ -652,10 +681,10 @@
                 item["Target Crash Type"].toLowerCase() === selectedTC.toLowerCase()
             );
 
-            console.log(filteredData.length);
+            console.log(filteredData);
 
             filteredData.forEach((item) => {
-              cf.add(capitalizeFirst(item["Contributing Factors"].split(',')[0].trim()));
+              cf.add(capitalizeFirst(item["Contributing Factors"]));
               at.add(capitalizeFirst(item["Land Use Type"]));
               ssae.add(capitalizeFirst(item["SSA Element"]));
               ssah.add(capitalizeFirst(item["SSA Hierarchy"]));
@@ -692,10 +721,10 @@
               (item) =>
                 item["Emphasis Area"].toLowerCase() === selectedFocusArea.toLowerCase() &&
                 item["Target Crash Type"].toLowerCase() === selectedTC.toLowerCase() && 
-                item["Contributing Factors"].split(',')[0].trim().toLowerCase() === selectedCF.toLowerCase()
+                item["Contributing Factors"].toLowerCase() === selectedCF.toLowerCase()
             );
 
-            console.log(filteredData.length);
+            console.log(filteredData);
 
             filteredData.forEach((item) => {
               at.add(capitalizeFirst(item["Land Use Type"]));
@@ -705,8 +734,8 @@
           }
 
           // Update the Target Crash and Area Type dropdowns with filtered options
-          updateSelect("#areaType", at);
           updateSelect("#ssaElements", ssae);
+          updateSelect("#areaType", at);
           updateCheckbox("#SSAHierarchy", ssah);
         });
 
@@ -716,11 +745,14 @@
           const selectedTC = $("#targetCrash").val();
           const selectedCF = $("#contributingFactors").val();
           const selectedAT = $(this).val();
+          const selectedCF = $(this).val();
+          const at = new Set();
           const ssae = new Set();
           const ssah = new Set();
 
-          if (selectedAT === "") {
+          if (selectedCF === "") {
             data.forEach((item) => {
+              at.add(capitalizeFirst(item["Land Use Type"]));
               ssae.add(capitalizeFirst(item["SSA Element"]));
               ssah.add(capitalizeFirst(item["SSA Hierarchy"]));
             });
@@ -732,89 +764,69 @@
               (item) =>
                 item["Emphasis Area"].toLowerCase() === selectedFocusArea.toLowerCase() &&
                 item["Target Crash Type"].toLowerCase() === selectedTC.toLowerCase() && 
-                item["Contributing Factors"].split(',')[0].trim().toLowerCase() === selectedCF.toLowerCase() && 
-                item["Land Use Type"].toLowerCase() === selectedAT.toLowerCase()
+                item["Contributing Factors"].toLowerCase() === selectedCF.toLowerCase()
             );
 
-            console.log(filteredData.length);
+            console.log(filteredData);
 
             filteredData.forEach((item) => {
+              at.add(capitalizeFirst(item["Land Use Type"]));
               ssae.add(capitalizeFirst(item["SSA Element"]));
               ssah.add(capitalizeFirst(item["SSA Hierarchy"]));
             });
           }
 
           // Update the Target Crash and Area Type dropdowns with filtered options
-          updateSelect("#ssaElements", at);
+          updateSelect("#ssaElements", ssae);
+          updateSelect("#areaType", at);
           updateCheckbox("#SSAHierarchy", ssah);
         });
 
-        // function to update ssa elements data update
-        $("#ssaElements").on("change", function () {
-          const selectedFocusArea = $("#focusArea").val();
-          const selectedTC = $("#targetCrash").val();
-          const selectedCF = $("#contributingFactors").val();
-          const selectedAT = $("#areaType").val();
-          const selectedSSA = $(this).val();
-          const ssah = new Set();
 
-          if (selectedSSA === "") {
+
+        // Function to update Target Crash and Area Type options based on Emphasis Area selection
+        $("#SSAHierarchy").on("change", function () {
+          const keyword = $("#customKeyword").val();
+          const selectedSSAHierarchy = $(this).val();
+          const fa = new Set();
+          const tc = new Set();
+          const at = new Set();
+          const eq = new Set();
+
+          if (selectedSSAHierarchy === "") {
             data.forEach((item) => {
-              ssah.add(capitalizeFirst(item["SSA Hierarchy"]));
+              fa.add(item["Emphasis Area"]);
+              tc.add(item["Target Crash Type"]);
+              at.add(item["Land Use Type"]);
+              // eq.add(item["Equity"]);
             });
           } else {
-            let filteredData  = [...data];
-           
+            let filteredData = [...data];
+            if(keyword.length > 0){
+              filteredData = filteredData.filter((item) => (item["SSA Element"].toLowerCase() === keyword.toLowerCase().trim()));
+            }
+            console.log(keyword,filteredData);
             // Filter data for the selected Emphasis Area
             filteredData = filteredData.filter(
-              (item) =>
-                item["Emphasis Area"].toLowerCase() === selectedFocusArea.toLowerCase() &&
-                item["Target Crash Type"].toLowerCase() === selectedTC.toLowerCase() && 
-                item["Contributing Factors"].split(',')[0].trim().toLowerCase() === selectedCF.toLowerCase() && 
-                item["Land Use Type"].toLowerCase() === selectedAT.toLowerCase() && 
-                item["SSA Element"].toLowerCase() === selectedSSA.toLowerCase()
+              (item) => item["SSA Hierarchy"] === selectedSSAHierarchy
             );
 
-            console.log(filteredData.length);
+            console.log(keyword, selectedSSAHierarchy, filteredData);
 
             filteredData.forEach((item) => {
-              ssah.add(capitalizeFirst(item["SSA Hierarchy"]));
+              fa.add(item["Emphasis Area"]);
+              tc.add(item["Target Crash Type"]);
+              at.add(item["Land Use Type"]);
+              // eq.add(item["Equity"]);
             });
           }
 
-          // update select and checkbox
-          updateCheckbox("#SSAHierarchy", ssah);
+          // Update the Target Crash and Area Type dropdowns with filtered options
+          updateSelect("#focusArea", fa);
+          updateSelect("#targetCrash", tc);
+          updateSelect("#areaType", at);
+          // updateSelect("#equity", eq);
         });
-
-        // function to update SSA hierarchy data
-        $("#SSAHierarchy input[type=checkbox]").on("change", function () {
-          const selectedFocusArea = $("#focusArea").val();
-          const selectedTC = $("#targetCrash").val();
-          const selectedCF = $("#contributingFactors").val();
-          const selectedAT = $("#areaType").val();
-          const selectedSSA = $("#ssaElements").val();
-          const selectedSSAH = $(this).val();
-
-          let filteredData  = [...data];
-
-          console.log(selectedSSAH);
-          
-
-          // Filter data for the selected Emphasis Area
-          filteredData = filteredData.filter(
-            (item) =>
-              item["Emphasis Area"].toLowerCase() === selectedFocusArea.toLowerCase() &&
-              item["Target Crash Type"].toLowerCase() === selectedTC.toLowerCase() && 
-              item["Contributing Factors"].split(',')[0].trim().toLowerCase() === selectedCF.toLowerCase() && 
-              item["Land Use Type"].toLowerCase() === selectedAT.toLowerCase() && 
-              item["SSA Element"].toLowerCase() === selectedSSA.toLowerCase() && 
-              item["SSA Hierarchy"].toLowerCase() === selectedSSAH.toLowerCase()
-          );
-
-          console.log(filteredData.length);
-
-        });
-        
 
         
 
@@ -1154,55 +1166,60 @@
 
         // Filter data based on selected values
         function getFilteredData() {
+          const keyword = $("#customKeyword").val().toLowerCase();
+          const SSAHierarchy = $("#SSAHierarchy").val().toLowerCase();
           const focusArea = $("#focusArea").val().toLowerCase();
           const targetCrash = $("#targetCrash").val().toLowerCase();
-          const contributingFactors = $("#contributingFactors").val().toLowerCase();
           const areaType = $("#areaType").val().toLowerCase();
-          const ssaElements = $("#ssaElements").val().toLowerCase();
-          const SSAHierarchy = $("#SSAHierarchy").val().toLowerCase();
-          const SSAHierarchyCheckboxes = $("#SSAHierarchy input[type=checkbox]:checked").map(function() {
-            return $(this).val().toLowerCase();
-          }).get();
-          
-          console.log(focusArea, targetCrash, contributingFactors, areaType, ssaElements, SSAHierarchy, SSAHierarchyCheckboxes);
+          // const equity = $("#equity").val().toLowerCase();
+
+          console.log(keyword,SSAHierarchy,focusArea,targetCrash,areaType)
 
           let filteredData = [...data];
 
-          console.log(filteredData.length);
+          if(keyword.length > 0){
+            filteredData = filteredData.filter((item) => (item["SSA Element"].toLowerCase() === keyword));
+          }
+
+          console.log(filteredData);
+
+          if(SSAHierarchy.length > 0){
+            filteredData = filteredData.filter((item) => (item["SSA Hierarchy"].toLowerCase() === SSAHierarchy));
+          }
+          console.log(filteredData);
 
           if(focusArea.length > 0){
-            filteredData = filteredData.filter((item) => (item["Emphasis Area"].toLowerCase() === focusArea.toLowerCase()));
+            filteredData = filteredData.filter((item) => (item["Emphasis Area"].toLowerCase() === focusArea));
           }
-
-          console.log(filteredData.length);
+          console.log(filteredData);
 
           if(targetCrash.length > 0){
-            filteredData = filteredData.filter((item) => (item["Target Crash Type"].toLowerCase() === targetCrash.toLowerCase()));
+            filteredData = filteredData.filter((item) => (item["Target Crash Type"].toLowerCase() === targetCrash));
           }
-          console.log(filteredData.length);
-          if(contributingFactors.length > 0){
-            filteredData = filteredData.filter((item) => (item["Contributing Factors"].split(',')[0].trim().toLowerCase() === contributingFactors.toLowerCase()));
-          }
-
-          console.log(filteredData.length);
+          console.log(filteredData);
 
           if(areaType.length > 0){
-            filteredData = filteredData.filter((item) => (item["Land Use Type"].toLowerCase() === areaType.toLowerCase()));
+            filteredData = filteredData.filter((item) => (item["Land Use Type"].toLowerCase() === areaType));
           }
+          console.log(filteredData);
 
-          console.log(filteredData.length);
 
-          if(ssaElements.length > 0){
-            filteredData = filteredData.filter((item) => (item["SSA Element"].toLowerCase() === ssaElements.toLowerCase()));
-          }
 
-          console.log(filteredData.length);
-
-          if(SSAHierarchyCheckboxes.length > 0){
-            filteredData = filteredData.filter((item) => (SSAHierarchyCheckboxes.includes(item["SSA Hierarchy"].toLowerCase())));
-          }
-
-          console.log(filteredData.length);
+          // let filteredData = data
+          //   .filter((item) => {
+          //     return (
+          //       (!keyword ||
+          //         item["SSA Element"].toLowerCase() === keyword) &&
+          //       (!SSAHierarchy ||
+          //         item["SSA Hierarchy"].toLowerCase() === SSAHierarchy) &&
+          //       (!focusArea ||
+          //         item["Emphasis Area"].toLowerCase() === focusArea) &&
+          //       (!targetCrash ||
+          //         item["Target Crash Type"].toLowerCase() === targetCrash) &&
+          //       (!areaType || item["Land Use Type"].toLowerCase() === areaType) 
+          //       // && (!equity || item["Equity"].toLowerCase() === equity)
+          //     );
+          //   })
 
 
            filteredData = filteredData.sort((a, b) => {
@@ -1213,7 +1230,7 @@
               return 0;
             });
 
-          console.log(filteredData.length);
+          console.log(filteredData);
 
           return filteredData;
         }
@@ -1223,7 +1240,7 @@
           e.preventDefault();
           const fd = getFilteredData();
           filteredData = fd;
-          console.log(filteredData.length);
+          console.log(filteredData);
           displayResults(filteredData);
         });
 
