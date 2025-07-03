@@ -264,72 +264,57 @@
     <script>
       $(document).ready(function () {
         const dataUrl =
-          "https://raw.githubusercontent.com/Xatta-Trone/dummy-data-ait-lab/refs/heads/main/nchrp-17-113-countermeasure-v9-update-april-2025.json";
+          "https://raw.githubusercontent.com/Xatta-Trone/dummy-data-ait-lab/refs/heads/main/nchrp-17-113-countermeasure-v10-july-2025.json";
         const baseUrl = window.location.origin;
 
         // Fetch data and populate DataTable
         $.getJSON(dataUrl, function (data) {
-          const tableData = data.map((item) => ({
-            "Emphasis Area": item["Emphasis Area"],
-            "Target Crash Type": item["Target Crash Type"],
-            "Land Use Type": item["Land Use Type"],
-            Countermeasure: item["Countermeasure"],
-            "Countermeasure Type": item["Countermeasure Type"],
-            CMF: item["CMF"],
-            "Crash Severity": item["Crash Severity"],
-            "Road Type": item["Road Type"],
-            "Star Quality": renderStars(item["Star Quality"]),
-            "Min AADT": item["Min AADT"],
-            "Max AADT": item["Max AADT"],
-            "Min Num Lanes": item["Min Num Lanes"],
-            "Max Num Lane": item["Max Num Lane"],
-            Cost: item["Cost"],
-            "Service Life": item["Service Life"],
-            "Implementation Time": item["Implementation Time"],
-            "Contributing Factors": item["Contributing Factors"],
-            "SSA Element": item["SSA Element"],
-            "SSA Hierarchy": item["SSA Hierarchy"],
-            AASHTO: item["AASHTO"],
-            "Countermeasure Link": item["Countermeasure Link"],
-            "Knowledge Base": item["Knowledge Base"],
-            "Countermeasure Factsheet": item["Countermeasure Factsheet"],
-            "Other Countermeasures": item["Other Countermeasures"],
-            "NCHRP 500 Series Objective": item["NCHRP 500 Series Objective"] || "N/A",
-            Image: item["img"]
-              ? `<img src="${baseUrl}/core/images/countermeasures/${item["img"]}" alt="Countermeasure Image" style="width: 80px; height: auto;">`
-              : "N/A",
-          }));
+            const tableData = data.map((item) => ({
+              "Emphasis area": item["Emphasis area"],
+              "Target Crash": item["Target Crash"],
+              "Area Type": item["AreaType"],
+              "Countermeasure": item["Countermeasure"],
+              "minCMF": item["minCMF"],
+              "maxCMF": item["maxCMF"],
+              "Road Type": item["RoadType"],
+              "Min Star Quality": renderStars(item["minStarQuality"]),
+              "Max Star Quality": renderStars(item["maxStarQuality"]),
+              "Cost": item["Cost"],
+              "Service Life": item["Service Life"],
+              "Contributing Factors": item["Contributing Factors"],
+              "SSA Pillars": item["SSA Pillars"],
+              "SSA Hierarchy": item["SSA Hierarchy"],
+              "AASHTO": item["AASHTO"],
+              "NCHRP 500 Series Objective": item["NCHRP 500 Series Objective"] || "N/A",
+              "Benefit-cost ratio": item["Benefit-cost ratio"],
+              "Image": item["img"]
+                ? `<img src="${baseUrl}/core/images/countermeasures/${item["img"]}" alt="Countermeasure Image" style="width: 80px; height: auto;">`
+                : "N/A",
+            }));
+
 
           // Initialize DataTable with horizontal scrolling enabled
           $("#countermeasuresTable").DataTable({
             data: tableData,
             columns: [
-              { data: "Emphasis Area" },
-              { data: "Target Crash Type" },
-              { data: "Land Use Type" },
+              { data: "Emphasis area" },
+              { data: "Target Crash" },
+              { data: "Area Type" },
               { data: "Countermeasure" },
-              { data: "Countermeasure Type" },
-              { data: "CMF" },
-              { data: "Crash Severity" },
+              { data: "minCMF" },
+              { data: "maxCMF" },
               { data: "Road Type" },
-              { data: "Star Quality" },
-              { data: "Min AADT" },
-              { data: "Max AADT" },
-              { data: "Min Num Lanes" },
-              { data: "Max Num Lane" },
+              { data: "Min Star Quality" },
+              { data: "Max Star Quality" },
               { data: "Cost" },
               { data: "Service Life" },
-              { data: "Implementation Time" },
               { data: "Contributing Factors" },
-              { data: "SSA Element" },
+              { data: "SSA Pillars" },
               { data: "SSA Hierarchy" },
               { data: "AASHTO" },
-              { data: "Countermeasure Link" },
-              { data: "Knowledge Base" },
-              { data: "Countermeasure Factsheet" },
-              { data: "Other Countermeasures" },
               { data: "NCHRP 500 Series Objective" },
-              { data: "Image" },
+              { data: "Benefit-cost ratio" },
+              { data: "Image" }
             ],
             scrollX: true, // Enable horizontal scrolling
             pageLength: 10,

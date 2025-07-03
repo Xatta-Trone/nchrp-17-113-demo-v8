@@ -501,7 +501,7 @@
 
         // Fetch data from URL
         $.getJSON(
-          "https://raw.githubusercontent.com/Xatta-Trone/dummy-data-ait-lab/refs/heads/main/nchrp-17-113-countermeasure-v9-update-april-2025.json",
+          "https://raw.githubusercontent.com/Xatta-Trone/dummy-data-ait-lab/refs/heads/main/nchrp-17-113-countermeasure-v10-july-2025.json",
           function (jsonData) {
             data = jsonData.map((item, index) => {
               return { ...item, index };
@@ -526,10 +526,10 @@
           const contributingFactors = new Set();
 
           data.forEach((item) => {
-            focusAreas.add(capitalizeFirst(item["Emphasis Area"]));
-            targetCrashes.add(capitalizeFirst(item["Target Crash Type"]));
-            areaTypes.add(capitalizeFirst(item["Land Use Type"]));
-            SSAElements.add(capitalizeFirst(item["SSA Element"]));
+            focusAreas.add(capitalizeFirst(item["Emphasis area"]));
+            targetCrashes.add(capitalizeFirst(item["Target Crash"]));
+            areaTypes.add(capitalizeFirst(item["AreaType"]));
+            SSAElements.add(capitalizeFirst(item["SSA Pillars"]));
             contributingFactors.add(capitalizeFirst(item["Contributing Factors"].split(',')[0].trim()));
             SSAHierarchy.add(capitalizeFirst(item["SSA Hierarchy"]));
           });
@@ -593,10 +593,10 @@
 
           if (selectedFocusArea === "") {
             data.forEach((item) => {
-              tc.add(capitalizeFirst(item["Target Crash Type"]));
+              tc.add(capitalizeFirst(item["Target Crash"]));
               cf.add(capitalizeFirst(item["Contributing Factors"].split(',')[0].trim()));
-              at.add(capitalizeFirst(item["Land Use Type"]));
-              ssae.add(capitalizeFirst(item["SSA Element"]));
+              at.add(capitalizeFirst(item["AreaType"]));
+              ssae.add(capitalizeFirst(item["SSA Pillars"]));
               ssah.add(capitalizeFirst(item["SSA Hierarchy"]));
             });
           } else {
@@ -604,16 +604,16 @@
             // Filter data for the selected Emphasis Area
             filteredData = filteredData.filter(
               (item) =>
-                item["Emphasis Area"].toLowerCase() === selectedFocusArea.toLowerCase()
+                item["Emphasis area"].toLowerCase() === selectedFocusArea.toLowerCase()
             );
 
            console.log(filteredData.length);
 
             filteredData.forEach((item) => {
-              tc.add(capitalizeFirst(item["Target Crash Type"]));
+              tc.add(capitalizeFirst(item["Target Crash"]));
               cf.add(capitalizeFirst(item["Contributing Factors"].split(',')[0].trim()));
-              at.add(capitalizeFirst(item["Land Use Type"]));
-              ssae.add(capitalizeFirst(item["SSA Element"]));
+              at.add(capitalizeFirst(item["AreaType"]));
+              ssae.add(capitalizeFirst(item["SSA Pillars"]));
               ssah.add(capitalizeFirst(item["SSA Hierarchy"]));
             });
           }
@@ -638,8 +638,8 @@
           if (selectedTC === "") {
             data.forEach((item) => {
               cf.add(capitalizeFirst(item["Contributing Factors"].split(',')[0].trim()));
-              at.add(capitalizeFirst(item["Land Use Type"]));
-              ssae.add(capitalizeFirst(item["SSA Element"]));
+              at.add(capitalizeFirst(item["AreaType"]));
+              ssae.add(capitalizeFirst(item["SSA Pillars"]));
               ssah.add(capitalizeFirst(item["SSA Hierarchy"]));
             });
           } else {
@@ -648,16 +648,16 @@
             // Filter data for the selected Emphasis Area
             filteredData = filteredData.filter(
               (item) =>
-                item["Emphasis Area"].toLowerCase() === selectedFocusArea.toLowerCase() &&
-                item["Target Crash Type"].toLowerCase() === selectedTC.toLowerCase()
+                item["Emphasis area"].toLowerCase() === selectedFocusArea.toLowerCase() &&
+                item["Target Crash"].toLowerCase() === selectedTC.toLowerCase()
             );
 
             console.log(filteredData.length);
 
             filteredData.forEach((item) => {
               cf.add(capitalizeFirst(item["Contributing Factors"].split(',')[0].trim()));
-              at.add(capitalizeFirst(item["Land Use Type"]));
-              ssae.add(capitalizeFirst(item["SSA Element"]));
+              at.add(capitalizeFirst(item["AreaType"]));
+              ssae.add(capitalizeFirst(item["SSA Pillars"]));
               ssah.add(capitalizeFirst(item["SSA Hierarchy"]));
             });
           }
@@ -680,8 +680,8 @@
 
           if (selectedCF === "") {
             data.forEach((item) => {
-              at.add(capitalizeFirst(item["Land Use Type"]));
-              ssae.add(capitalizeFirst(item["SSA Element"]));
+              at.add(capitalizeFirst(item["AreaType"]));
+              ssae.add(capitalizeFirst(item["SSA Pillars"]));
               ssah.add(capitalizeFirst(item["SSA Hierarchy"]));
             });
           } else {
@@ -690,16 +690,16 @@
             // Filter data for the selected Emphasis Area
             filteredData = filteredData.filter(
               (item) =>
-                item["Emphasis Area"].toLowerCase() === selectedFocusArea.toLowerCase() &&
-                item["Target Crash Type"].toLowerCase() === selectedTC.toLowerCase() && 
+                item["Emphasis area"].toLowerCase() === selectedFocusArea.toLowerCase() &&
+                item["Target Crash"].toLowerCase() === selectedTC.toLowerCase() && 
                 item["Contributing Factors"].split(',')[0].trim().toLowerCase() === selectedCF.toLowerCase()
             );
 
             console.log(filteredData.length);
 
             filteredData.forEach((item) => {
-              at.add(capitalizeFirst(item["Land Use Type"]));
-              ssae.add(capitalizeFirst(item["SSA Element"]));
+              at.add(capitalizeFirst(item["AreaType"]));
+              ssae.add(capitalizeFirst(item["SSA Pillars"]));
               ssah.add(capitalizeFirst(item["SSA Hierarchy"]));
             });
           }
@@ -721,7 +721,7 @@
 
           if (selectedAT === "") {
             data.forEach((item) => {
-              ssae.add(capitalizeFirst(item["SSA Element"]));
+              ssae.add(capitalizeFirst(item["SSA Pillars"]));
               ssah.add(capitalizeFirst(item["SSA Hierarchy"]));
             });
           } else {
@@ -730,16 +730,16 @@
             // Filter data for the selected Emphasis Area
             filteredData = filteredData.filter(
               (item) =>
-                item["Emphasis Area"].toLowerCase() === selectedFocusArea.toLowerCase() &&
-                item["Target Crash Type"].toLowerCase() === selectedTC.toLowerCase() && 
+                item["Emphasis area"].toLowerCase() === selectedFocusArea.toLowerCase() &&
+                item["Target Crash"].toLowerCase() === selectedTC.toLowerCase() && 
                 item["Contributing Factors"].split(',')[0].trim().toLowerCase() === selectedCF.toLowerCase() && 
-                item["Land Use Type"].toLowerCase() === selectedAT.toLowerCase()
+                item["AreaType"].toLowerCase() === selectedAT.toLowerCase()
             );
 
             console.log(filteredData.length);
 
             filteredData.forEach((item) => {
-              ssae.add(capitalizeFirst(item["SSA Element"]));
+              ssae.add(capitalizeFirst(item["SSA Pillars"]));
               ssah.add(capitalizeFirst(item["SSA Hierarchy"]));
             });
           }
@@ -768,11 +768,11 @@
             // Filter data for the selected Emphasis Area
             filteredData = filteredData.filter(
               (item) =>
-                item["Emphasis Area"].toLowerCase() === selectedFocusArea.toLowerCase() &&
-                item["Target Crash Type"].toLowerCase() === selectedTC.toLowerCase() && 
+                item["Emphasis area"].toLowerCase() === selectedFocusArea.toLowerCase() &&
+                item["Target Crash"].toLowerCase() === selectedTC.toLowerCase() && 
                 item["Contributing Factors"].split(',')[0].trim().toLowerCase() === selectedCF.toLowerCase() && 
-                item["Land Use Type"].toLowerCase() === selectedAT.toLowerCase() && 
-                item["SSA Element"].toLowerCase() === selectedSSA.toLowerCase()
+                item["AreaType"].toLowerCase() === selectedAT.toLowerCase() && 
+                item["SSA Pillars"].toLowerCase() === selectedSSA.toLowerCase()
             );
 
             console.log(filteredData.length);
@@ -803,11 +803,11 @@
           // Filter data for the selected Emphasis Area
           filteredData = filteredData.filter(
             (item) =>
-              item["Emphasis Area"].toLowerCase() === selectedFocusArea.toLowerCase() &&
-              item["Target Crash Type"].toLowerCase() === selectedTC.toLowerCase() && 
+              item["Emphasis area"].toLowerCase() === selectedFocusArea.toLowerCase() &&
+              item["Target Crash"].toLowerCase() === selectedTC.toLowerCase() && 
               item["Contributing Factors"].split(',')[0].trim().toLowerCase() === selectedCF.toLowerCase() && 
-              item["Land Use Type"].toLowerCase() === selectedAT.toLowerCase() && 
-              item["SSA Element"].toLowerCase() === selectedSSA.toLowerCase() && 
+              item["AreaType"].toLowerCase() === selectedAT.toLowerCase() && 
+              item["SSA Pillars"].toLowerCase() === selectedSSA.toLowerCase() && 
               item["SSA Hierarchy"].toLowerCase() === selectedSSAH.toLowerCase()
           );
 
@@ -815,186 +815,109 @@
 
         });
         
-
-        
-
-        
-
-        // Function to get the CMF range
+        // Function to get the overall min and max CMF range from minCMF and maxCMF fields
         function getCMFRange(dataArray) {
-          // Extract valid CMF values (decimal numbers only)
-          const cmfValues = dataArray
-            .map((item) => parseFloat(item.CMF)) // Convert to number
-            .filter((value) => !isNaN(value) && typeof value === "number"); // Filter valid numbers
+          // Extract valid minCMF and maxCMF values
+          const minCMFValues = dataArray
+            .map((item) => parseFloat(item.minCMF))
+            .filter((value) => !isNaN(value) && typeof value === "number");
+          
+          console.log("minCMFValues", minCMFValues);
 
-          if (cmfValues.length === 0) {
-            return { minCMF: null, maxCMF: null }; // Handle empty CMF case
+          const maxCMFValues = dataArray
+            .map((item) => parseFloat(item.maxCMF))
+            .filter((value) => !isNaN(value) && typeof value === "number");
+
+          console.log("maxCMFValues", maxCMFValues);
+
+          // Handle empty case
+          if (minCMFValues.length === 0 || maxCMFValues.length === 0) {
+            return { minCMF: null, maxCMF: null };
           }
 
-          // Find the minimum and maximum CMF values
-          const minCMF = Math.min(...cmfValues);
-          const maxCMF = Math.max(...cmfValues);
+          // Compute overall min and max
+          const minCMF = Math.min(...minCMFValues);
+          const maxCMF = Math.max(...maxCMFValues);
 
           return { minCMF, maxCMF };
         }
 
+
         // Display full details for each filtered item, show total count, and add checkboxes
         function displayResults(filteredData) {
-          // Group data by Countermeasure
-          groupedData = filteredData.reduce((acc, item) => {
-            const focusArea = item["Countermeasure"] || "Unspecified";
-            if (!acc[focusArea]) acc[focusArea] = [];
-            acc[focusArea].push(item);
-            return acc;
-          }, {});
 
-          // Empty previous results
-          $("#results").empty();
-          $("#totalCount").text(`${filteredData.length} results found.`);
+          console.log("Filtered Data Length:", filteredData.length);
+          console.log("Filtered Data:", filteredData);
 
-          // Check if no results
-          if (filteredData.length === 0) {
-            $("#results").append(
-              "<p class='alert alert-danger'>No results available.</p>"
-            );
-            return;
-          }
-
-          // Loop through each Countermeasure group
-          Object.keys(groupedData).forEach((focusArea, index) => {
-            const items = groupedData[focusArea].sort(
-              (a, b) => (a.CMF || 0) - (b.CMF || 0)
-            );
-
-            // Display the item with the lowest CMF first
-            const topItem = items[0];
-            const tableId = `datatable-${index}`; // Unique ID for each datatable
-
-            let stars = "";
-            let rating = parseInt(topItem["Star Quality"] || 0);
-
-            // Array of gold shades from light to dark
-            const goldShades = [
-              "#FFD700", // Light gold
-              "#FFC700", // Slightly darker
-              "#FFB700", // Medium gold
-              "#FFA700", // Darker gold
-              "#FF9700", // Darkest gold
-            ];
-
-            for (let i = 0; i < rating; i++) {
-              // Choose a shade based on the rating level (up to 5 stars)
-              const color = goldShades[i] || goldShades[goldShades.length - 1];
-              stars += `<i class="fa fa-star" style="color: ${color};"></i>`;
-            }
-
-            // get the cmf range
-            const cmfRange = getCMFRange(items);
-
-            console.log("cmf range", cmfRange);
+          filteredData.forEach((item, index) => {
+            let cmfId = item["CMF1 (min)"]
+                        .replace(/^CMF/, '')        // Remove 'CMF' prefix
+                        .replace(/\s+/g, '-')       // Replace spaces with hyphens (if any)
+                        .toLowerCase();             // Convert to lowercase (optional)
+            console.log("CMF ID:", cmfId);
 
             const cardTopContent = `
               <div class="panel panel-default selectable-card panel-mt" data-index="${
-                topItem.index
-              }" data-countermeasure="${topItem.Countermeasure}">
+                item.index
+              }" data-countermeasure="${item.Countermeasure}">
                 <div class="panel-body card-content">
                   <input type="checkbox" class="select-item" data-index="${
-                    topItem.index
-                  }" data-countermeasure="${topItem.Countermeasure}">
+                    item.index
+                  }" data-countermeasure="${item.Countermeasure}">
                   <div class="card-text-content">
                     <p><strong>Countermeasure:</strong> ${
-                      topItem.Countermeasure || "N/A"
+                      item.Countermeasure || "N/A"
                     }</p>
                     <p><strong>Type:</strong> ${
-                      topItem["Countermeasure Type"] || "N/A"
+                      item["Countermeasure Staus_OnlyforTool"] || "N/A"
                     }</p>
                     <p><strong>SSA Element:</strong> ${
-                      topItem["SSA Element"] || "N/A"
+                      item["SSA Pillars"] || "N/A"
                     }</p>
-                    <p><strong>TZD:</strong> ${topItem["AASHTO"] || "N/A"}</p>
+                    <p><strong>TZD:</strong> ${item["AASHTO"] || "N/A"}</p>
                     <p><strong>SSA Hierarchy:</strong> ${
-                      topItem["SSA Hierarchy"] || "N/A"
+                      item["SSA Hierarchy"] || "N/A"
                     }</p>
                     <p><strong>Emphasis Area:</strong> ${
-                      topItem["Emphasis Area"] || "N/A"
+                      item["Emphasis area"] || "N/A"
                     }</p>
                     <p><strong>Target Crash Type:</strong> ${
-                      topItem["Target Crash Type"] || "N/A"
+                      item["Target Crash"] || "N/A"
                     }</p>
                     <p><strong>Land Use Type:</strong> ${
-                      topItem["Land Use Type"] || "N/A"
+                      item["AreaType"] || "N/A"
                     }</p>
                    
                     <p><strong>Contributing Factors:</strong> ${
-                      topItem["Contributing Factors"] || "N/A"
+                      item["Contributing Factors"] || "N/A"
                     }</p>
                   </div>
                   <div class="card-img-content">
                     <img src="../core/images/countermeasures/${
-                      topItem["img"]
+                      item["img"]
                     }" alt="Image" class="img-responsive pull-right">
                   </div>
                   <div class="card-bottom-content" style="width: 100%;margin-left:4%;">
                     <div class="row">
                       <div class="col-md-12">
                         <p><strong>CMF:</strong> ${
-                          cmfRange.maxCMF && cmfRange.minCMF
-                            ? cmfRange.maxCMF !== cmfRange.minCMF
-                              ? `[${cmfRange.minCMF} - ${cmfRange.maxCMF}]`
-                              : `${cmfRange.minCMF}`
+                          item.maxCMF && item.minCMF
+                            ? item.maxCMF !== item.minCMF
+                              ? `[${item.minCMF} - ${item.maxCMF}]`
+                              : `${item.minCMF}`
                             : "N/A"
                         }
                         </p>
                          <p><strong>NCHRP 500 Series Objective:</strong> ${
-                          topItem["NCHRP 500 Series Objective"] || "N/A"
+                          item["NCHRP 500 Series Objective"] || "N/A"
                         }</p>
                         <span style="color:red">Note: This is guidance only. States can select their own countermeasures.</span>
 
                         <p  style="margin-top: 15px; margin-bottom: 15px;">
-                          <a href="#" data-toggle="modal" data-target="#cmfModal-${index}" style="background-color:lightgray;display:inline-block;padding:5px 10px;color:black;">CMF Clearinghouse</a>
-                          <a href="#" data-toggle="modal" data-target="#kbModal-${index}" style="background-color:lightblue;display:inline-block;padding:5px 10px;color:black;">Knowledge Base</a>
+                          ${cmfId ? `<a href="https://cmfclearinghouse.fhwa.dot.gov/detail.php?facid=${cmfId}" target="_blank" style="background-color:lightgray;display:inline-block;padding:5px 10px;color:black;">CMF Clearinghouse</a>` : ''}
+                          <a href="sd.htm?q=${item["Keyword_OnlyForTool"]}" target="_blank" style="background-color:lightblue;display:inline-block;padding:5px 10px;color:black;">Knowledge Base</a>
                           <a href="#" data-toggle="modal" data-target="#cmfsModal-${index}"  style="background-color:lightgreen;display:inline-block;padding:5px 10px;color:black;">Countermeasure Fact Sheet</a>
                         </p>
-
-                        <!-- Modal for CMF Clearinghouse -->
-                        <div class="modal fade" id="cmfModal-${index}" tabindex="-1" role="dialog" aria-labelledby="cmfModalLabel-${index}" aria-hidden="true">
-                          <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                                <h4 class="modal-title" id="cmfModalLabel-${index}">CMF Clearinghouse</h4>
-                              </div>
-                              <div class="modal-body">
-                                <p>${topItem["Countermeasure Link"]}</p>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <!-- Modal for Knowledge Base -->
-                        <div class="modal fade" id="kbModal-${index}" tabindex="-1" role="dialog" aria-labelledby="kbModalLabel-${index}" aria-hidden="true">
-                          <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                                <h4 class="modal-title" id="kbModalLabel-${index}">Knowledge Base</h4>
-                              </div>
-                              <div class="modal-body">
-                                <p>${topItem["Knowledge Base"]}</p>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
 
                         <!-- Modal for Countermeasure Fact Sheet -->
                         <div class="modal fade" id="cmfsModal-${index}" tabindex="-1" role="dialog" aria-labelledby="cmfsModalLabel-${index}" aria-hidden="true">
@@ -1007,7 +930,7 @@
                                 <h4 class="modal-title" id="cmfsModalLabel-${index}">Countermeasure Fact Sheet</h4>
                               </div>
                               <div class="modal-body">
-                                <p>${topItem["Countermeasure Factsheet"]}</p>
+                                <p>${item["Countermeasure Factsheet"]}</p>
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -1016,23 +939,23 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-6"">
+                      <div class="col-md-4"">
                         <p><strong>Cost:</strong> ${
-                          topItem["Cost"] || "N/A"
+                          item["Cost"] || "N/A"
                         }</p>
                         <p><strong>Service Life:</strong> ${
-                          topItem["Service Life"] || "N/A"
+                          item["Service Life"] || "N/A"
                         }</p>
                         <p><strong>Implementation Time:</strong> ${
-                          topItem["Implementation Time"] || "N/A"
+                          item["Implementation Time"] || "N/A"
                         }</p>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-8">
                         <p><strong>Redundancy-Driven Countermeasures</strong></p>
                         <ol>
-                          <li><a href="#" data-toggle="modal" data-target="#flipFlop"  style="font-size:90%;">Countermeasure 1 (Link to Countermeasure)</a></li>
-                          <li><a href="#" data-toggle="modal" data-target="#flipFlop"  style="font-size:90%;">Countermeasure 2 (Link to Countermeasure)</a></li>
-                          <li><a href="#" data-toggle="modal" data-target="#flipFlop"  style="font-size:90%;">Countermeasure 3 (Link to Countermeasure)</a></li>
+                          <li>${item["Countermeasure 1"] || "N/A"}</li>
+                          <li>${item["Countermeasure 2"] || "N/A"}</li>
+                          <li>${item["Countermeasure 3"] || "N/A"}</li>
                         </ol>
                       </div>
                     </div>
@@ -1041,77 +964,6 @@
               </div>
             `;
             $("#results").append(cardTopContent);
-
-            // Create a unique ID for each datatable based on the Emphasis Area index
-            const datatableContent = `
-              <table id="${tableId}" class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>CMF</th>
-                    <th>Crash Severity</th>
-                    <th>Star Rating</th>
-                    <th>Road Type</th>
-                    <th>Min AADT</th>
-                    <th>Min Num Lanes</th>
-                    <th>Contributing Factors</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${items
-                    .map(
-                      (item) => `
-                        <tr>
-                          <td>${item.CMF || "N/A"}</td>
-                          <td class="${
-                            (item["Crash Severity"] || "").length > 15
-                              ? "text-overflow"
-                              : ""
-                          }">${item["Crash Severity"] || "N/A"}</td>
-                          <td class="${
-                            (item["Star Quality"] || "").length > 15
-                              ? "text-overflow"
-                              : ""
-                          }">${item["Star Quality"] || "N/A"}</td>
-                          <td class="${
-                            (item["Road Type"] || "").length > 15
-                              ? "text-overflow"
-                              : ""
-                          }">${item["Road Type"] || "N/A"}</td>
-                          <td class="${
-                            (item["Min AADT"] || "").length > 15
-                              ? "text-overflow"
-                              : ""
-                          }">${item["Min AADT"] || "N/A"}</td>
-                          <td class="${
-                            (item["Min Num Lanes"] || "").length > 15
-                              ? "text-overflow"
-                              : ""
-                          }">${item["Min Num Lanes"] || "N/A"}</td>
-                          <td class="${
-                            (item["Contributing Factors"] || "").length > 15
-                              ? "text-overflow"
-                              : ""
-                          }">${item["Contributing Factors"] || "N/A"}</td>
-                        </tr>
-                      `
-                    )
-                    .join("")}
-                </tbody>
-              </table>
-            `;
-            $("#results").append(datatableContent);
-
-            // Initialize the datatable for this specific table ID
-            $(`#${tableId}`).DataTable({
-              pageLength: 5, // Show 5 items per page initially
-              lengthMenu: [5, 10, 25, 50, 100],
-              drawCallback: function () {
-                // Add 'pagination' and 'pagination-sm' classes to the pagination container
-                $(`#${tableId}_paginate ul`).addClass(
-                  "pagination pagination-sm"
-                );
-              },
-            });
           });
 
           // Reset the select-all state and text
@@ -1133,14 +985,7 @@
 
         // Update selected count and show/hide fixed export buttons
         function updateSelectedCount() {
-          let totalSelected = 0;
-          $(".select-item:checked").each(function () {
-            const countermeasure = $(this).data("countermeasure");
-            if (countermeasure) {
-              totalSelected += groupedData[countermeasure].length;
-            }
-          });
-
+          let totalSelected = $(".select-item:checked").length;
           $("#selectedCount").text(`Selected: ${totalSelected}`);
           $("#fixedSelectedCount").text(`Selected: ${totalSelected}`);
 
@@ -1171,13 +1016,13 @@
           console.log(filteredData.length);
 
           if(focusArea.length > 0){
-            filteredData = filteredData.filter((item) => (item["Emphasis Area"].toLowerCase() === focusArea.toLowerCase()));
+            filteredData = filteredData.filter((item) => (item["Emphasis area"].toLowerCase() === focusArea.toLowerCase()));
           }
 
           console.log(filteredData.length);
 
           if(targetCrash.length > 0){
-            filteredData = filteredData.filter((item) => (item["Target Crash Type"].toLowerCase() === targetCrash.toLowerCase()));
+            filteredData = filteredData.filter((item) => (item["Target Crash"].toLowerCase() === targetCrash.toLowerCase()));
           }
           console.log(filteredData.length);
           if(contributingFactors.length > 0){
@@ -1187,13 +1032,13 @@
           console.log(filteredData.length);
 
           if(areaType.length > 0){
-            filteredData = filteredData.filter((item) => (item["Land Use Type"].toLowerCase() === areaType.toLowerCase()));
+            filteredData = filteredData.filter((item) => (item["AreaType"].toLowerCase() === areaType.toLowerCase()));
           }
 
           console.log(filteredData.length);
 
           if(ssaElements.length > 0){
-            filteredData = filteredData.filter((item) => (item["SSA Element"].toLowerCase() === ssaElements.toLowerCase()));
+            filteredData = filteredData.filter((item) => (item["SSA Pillars"].toLowerCase() === ssaElements.toLowerCase()));
           }
 
           console.log(filteredData.length);
@@ -1258,6 +1103,7 @@
         // Export selected items to CSV from top or fixed buttons
         $("#exportTopBtnCsv, #exportFixedBtnCsv").click(function () {
           const selectedItems = getSelectedItems();
+          console.log(selectedItems.length);
           console.log(selectedItems);
           if (selectedItems.length === 0) {
             alert("Please select at least one item to export.");
@@ -1280,9 +1126,12 @@
         function getSelectedItems() {
           let selectedItems = [];
           $(".select-item:checked").each(function () {
-            const countermeasure = $(this).data("countermeasure");
-            if (countermeasure) {
-              selectedItems = selectedItems.concat(groupedData[countermeasure]);
+            const index = parseInt($(this).data("index")); // Get the index from data attribute
+            if (!isNaN(index)) {
+              const match = data.find(item => item.index === index); // Match by index key
+              if (match) {
+                selectedItems.push(match);
+              }
             }
           });
           console.log(selectedItems);
@@ -1344,11 +1193,11 @@
           //     header !== "CountermeasureID"
           // );
           const headers = [
-            "Emphasis Area",
-            "Target Crash Type",
-            "Land Use Type",
+            "Emphasis area",
+            "Target Crash",
+            "AreaType",
             "Countermeasure",
-            "SSA Element",
+            "SSA Pillars",
             "SSA Hierarchy",
             "AASHTO",
           ];
