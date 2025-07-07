@@ -851,11 +851,15 @@
 
           $("#results").empty();
 
+          // Update the Countermeasure Results count
+            var itemLabel = filteredData.length === 1 ? "item" : "items";
+            $("h2:contains('Countermeasure Results')").text(`Countermeasure Results (showing ${filteredData.length} ${itemLabel})`);
+
           filteredData.forEach((item, index) => {
-            let cmfId = item["CMF1 (min)"]
+            let cmfId = item["CMF1 (min)"] ? item["CMF1 (min)"]
                         .replace(/^CMF/, '')        // Remove 'CMF' prefix
                         .replace(/\s+/g, '-')       // Replace spaces with hyphens (if any)
-                        .toLowerCase();             // Convert to lowercase (optional)
+                        .toLowerCase() : '';            // Convert to lowercase (optional)
             console.log("CMF ID:", cmfId);
 
             const cardTopContent = `
@@ -918,30 +922,12 @@
                         <p  style="margin-top: 15px; margin-bottom: 15px;">
                           ${cmfId ? `<a href="https://cmfclearinghouse.fhwa.dot.gov/detail.php?facid=${cmfId}" target="_blank" style="background-color:lightgray;display:inline-block;padding:5px 10px;color:black;">CMF Clearinghouse</a>` : ''}
                           <a href="sd.htm?q=${item["Keyword_OnlyForTool"]}" target="_blank" style="background-color:lightblue;display:inline-block;padding:5px 10px;color:black;">Knowledge Base</a>
-                          <a href="#" data-toggle="modal" data-target="#cmfsModal-${index}"  style="background-color:lightgreen;display:inline-block;padding:5px 10px;color:black;">Countermeasure Fact Sheet</a>
+                          <a href="factsheets/${item['CountermeasureID']}.pdf" target="_blank" style="background-color:lightgreen;display:inline-block;padding:5px 10px;color:black;">Countermeasure Fact Sheet</a>
                         </p>
 
-                        <!-- Modal for Countermeasure Fact Sheet -->
-                        <div class="modal fade" id="cmfsModal-${index}" tabindex="-1" role="dialog" aria-labelledby="cmfsModalLabel-${index}" aria-hidden="true">
-                          <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                                <h4 class="modal-title" id="cmfsModalLabel-${index}">Countermeasure Fact Sheet</h4>
-                              </div>
-                              <div class="modal-body">
-                                <p>${item["Countermeasure Factsheet"]}</p>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                        
                       </div>
-                      <div class="col-md-4"">
+                      <div class="col-md-4">
                         <p><strong>Cost:</strong> ${
                           item["Cost"] || "N/A"
                         }</p>
@@ -1078,6 +1064,7 @@
         $("#filterForm").on("reset", function () {
           filteredData = [];
           $("#results").empty();
+          $("h2:contains('Countermeasure Results')").text(`Countermeasure Results`);
           $("#totalCount").text(
             "Please select inputs from the left to filter countermeasures."
           );
