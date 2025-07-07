@@ -849,6 +849,8 @@
           console.log("Filtered Data Length:", filteredData.length);
           console.log("Filtered Data:", filteredData);
 
+          $("#results").empty();
+
           filteredData.forEach((item, index) => {
             let cmfId = item["CMF1 (min)"]
                         .replace(/^CMF/, '')        // Remove 'CMF' prefix

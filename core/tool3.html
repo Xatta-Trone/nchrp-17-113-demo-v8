@@ -229,29 +229,31 @@
           <tr>
             <th>Emphasis Area</th>
             <th>Target Crash Type</th>
+            <th>Contributing Factors</th>
             <th>Area Type</th>
             <th>Countermeasure</th>
-            <th>Countermeasure Type</th>
-            <th>CMF</th>
-            <th>Crash Severity</th>
+            <th>Min CMF</th>
+            <th>Max CMF</th>
             <th>Road Type</th>
-            <th>Star Quality</th>
+            <th>Min Star Quality</th>
+            <th>Max Star Quality</th>
             <th>Min AADT</th>
             <th>Max AADT</th>
-            <th>Min Num Lanes</th>
-            <th>Max Num Lane</th>
-            <th>Cost</th>
-            <th>Service Life</th>
-            <th>Implementation Time</th>
-            <th>Contributing Factors</th>
-            <th>SSA Element</th>
+            <th>CMF (min)</th>
+            <th>CMF (max)</th>
+            <th>CMF (mean)</th>
+            <th>Countermeasure 1</th>
+            <th>Countermeasure 2</th>
+            <th>Countermeasure 3</th>
+            <th>Key Stakeholder</th>
+            <th>SSA Pillars</th>
             <th>SSA Hierarchy</th>
             <th>AASHTO</th>
-            <th>Countermeasure Link</th>
-            <th>Knowledge Base</th>
-            <th>Countermeasure Factsheet</th>
-            <th>Other Countermeasures</th>
             <th>NCHRP 500 Series Objective</th>
+            <th>N500St</th>
+            <th>Benefit-cost ratio</th>
+            <th>Service Life</th>
+            <th>Cost</th>           
             <th>Image</th>
           </tr>
         </thead>
@@ -270,23 +272,33 @@
         // Fetch data and populate DataTable
         $.getJSON(dataUrl, function (data) {
             const tableData = data.map((item) => ({
-              "Emphasis area": item["Emphasis area"],
-              "Target Crash": item["Target Crash"],
-              "Area Type": item["AreaType"],
-              "Countermeasure": item["Countermeasure"],
-              "minCMF": item["minCMF"],
-              "maxCMF": item["maxCMF"],
-              "Road Type": item["RoadType"],
-              "Min Star Quality": renderStars(item["minStarQuality"]),
-              "Max Star Quality": renderStars(item["maxStarQuality"]),
-              "Cost": item["Cost"],
-              "Service Life": item["Service Life"],
-              "Contributing Factors": item["Contributing Factors"],
-              "SSA Pillars": item["SSA Pillars"],
-              "SSA Hierarchy": item["SSA Hierarchy"],
-              "AASHTO": item["AASHTO"],
+              "Emphasis area": item["Emphasis area"] || "N/A",
+              "Target Crash": item["Target Crash"] || "N/A",
+              "Contributing Factors": item["Contributing Factors"] || "N/A",
+              "Area Type": item["AreaType"] || "N/A",
+              "Countermeasure": item["Countermeasure"] || "N/A",
+              "minCMF": item["minCMF"] || "N/A",
+              "maxCMF": item["maxCMF"] || "N/A",
+              "Road Type": item["RoadType"]   || "N/A",
+              "Min Star Quality": renderStars(item["minStarQuality"]) || "N/A",
+              "Max Star Quality": renderStars(item["maxStarQuality"]) || "N/A",
+              "Min AADT": item["min_MinAADT"] || "N/A",
+              "Max AADT": item["min_MaxAADT"] || "N/A",
+              "CMF (min)": `${(cmfId = (item["CMF1 (min)"] || '').trim()) ? `<a href="https://cmfclearinghouse.fhwa.dot.gov/detail.php?facid=${cmfId.replace(/^CMF/, '').replace(/\s+/g, '-').toLowerCase()}" target="_blank">CMF min</a>` : 'N/A'}`,
+              "CMF (max)": `${(cmfId = (item["CMF1 (max)"] || '').trim()) ? `<a href="https://cmfclearinghouse.fhwa.dot.gov/detail.php?facid=${cmfId.replace(/^CMF/, '').replace(/\s+/g, '-').toLowerCase()}" target="_blank">CMF max</a>` : 'N/A'}`,
+              "CMF (mean)": `${(cmfId = (item["CMF1 (mean)"] || '').trim()) ? `<a href="https://cmfclearinghouse.fhwa.dot.gov/detail.php?facid=${cmfId.replace(/^CMF/, '').replace(/\s+/g, '-').toLowerCase()}" target="_blank">CMF mean</a>` : 'N/A'}`,
+              "Countermeasure 1": item["Countermeasure 1"] || "N/A",
+              "Countermeasure 2": item["Countermeasure 2"] || "N/A",
+              "Countermeasure 3": item["Countermeasure 3"] || "N/A",
+              "Key Stakeholder": item["Key Stakeholder"] || "N/A",
+              "SSA Pillars": item["SSA Pillars"] || "N/A",
+              "SSA Hierarchy": item["SSA Hierarchy"] || "N/A",
+              "AASHTO": item["AASHTO"] || "N/A",
               "NCHRP 500 Series Objective": item["NCHRP 500 Series Objective"] || "N/A",
-              "Benefit-cost ratio": item["Benefit-cost ratio"],
+              "N500St": item["N500St"] || "N/A",
+              "Benefit-cost ratio": item["Benefit-cost ratio"] || "N/A",
+              "Service Life": item["Service Life"] || "N/A",
+              "Cost": item["Cost"] || "N/A",
               "Image": item["img"]
                 ? `<img src="${baseUrl}/core/images/countermeasures/${item["img"]}" alt="Countermeasure Image" style="width: 80px; height: auto;">`
                 : "N/A",
@@ -299,6 +311,7 @@
             columns: [
               { data: "Emphasis area" },
               { data: "Target Crash" },
+              { data: "Contributing Factors" },
               { data: "Area Type" },
               { data: "Countermeasure" },
               { data: "minCMF" },
@@ -306,14 +319,23 @@
               { data: "Road Type" },
               { data: "Min Star Quality" },
               { data: "Max Star Quality" },
-              { data: "Cost" },
-              { data: "Service Life" },
-              { data: "Contributing Factors" },
+              { data: "Min AADT" },
+              { data: "Max AADT" },
+              { data: "CMF (min)" },
+              { data: "CMF (max)" },
+              { data: "CMF (mean)" },
+              { data: "Countermeasure 1" },
+              { data: "Countermeasure 2" },
+              { data: "Countermeasure 3" },
+              { data: "Key Stakeholder" },
               { data: "SSA Pillars" },
               { data: "SSA Hierarchy" },
               { data: "AASHTO" },
               { data: "NCHRP 500 Series Objective" },
+              { data: "N500St" },
               { data: "Benefit-cost ratio" },
+              { data: "Service Life" },
+              { data: "Cost" },
               { data: "Image" }
             ],
             scrollX: true, // Enable horizontal scrolling

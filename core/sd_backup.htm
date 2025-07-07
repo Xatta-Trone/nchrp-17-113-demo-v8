@@ -114,7 +114,6 @@
 
     .label-custom {
       font-size: 13px;
-      display: inline-block;
     }
   </style>
 </head>
@@ -156,10 +155,7 @@
         <h3>Selection Tool</h3>
         <!-- Custom Search Bar -->
         <div class="input-group">
-          <input type="text" class="form-control" id="customKeyword" list="keywordsDatalist" placeholder="Search by title or keyword" />
-          <datalist id="keywordsDatalist">
-            <!-- Options will be dynamically loaded here -->
-          </datalist>
+          <input type="text" class="form-control" id="customKeyword" placeholder="Search by title" />
           <span class="input-group-btn">
             <button class="btn bg-blue" type="button" id="customSearchBtn">
               Search
@@ -206,49 +202,7 @@
 
       // Load the items from the JSON file to calculate the category counts and group the items
       $.getJSON("https://raw.githubusercontent.com/Xatta-Trone/dummy-data-ait-lab/refs/heads/main/items_v2_with_keywords.json", function (items) {
-
-        // 1. extract and count unique keywords 
-        var keywordCounts = {};
-        items.forEach(function (item) {
-          if (item.keywords && Array.isArray(item.keywords)) {
-            item.keywords.forEach(function (keyword) {
-              var kw = keyword.toLowerCase();
-              if (!keywordCounts[kw]) {
-                keywordCounts[kw] = 0;
-              }
-              keywordCounts[kw]++;
-            });
-          }
-        });
-
-        // 2. render keywords in the sidebar
-        var sidebar = $("#sidebar");
-        var keywordHTML = '<div class="list-group-item active"><strong>Keywords</strong></div>';
-        Object.keys(keywordCounts).sort().forEach(function (keyword) {
-          var count = keywordCounts[keyword];
-          keywordHTML +=
-            '<div class="list-group-item indent-level-1">' +
-            '<input type="checkbox" class="filter-checkbox" data-label="' +
-            keyword +
-            '"> ' +
-            '<label class="selectable-label">' +
-            keyword +
-            " (" +
-            count +
-            ")</label>" +
-            "</div>";
-        });
-
-        sidebar.append(keywordHTML); // Add keywords section at the top
-
-        // add the lowercase keywords to datalist for autocomplete in the search box
-        var dataList = $("#keywordsDatalist");
-        Object.keys(keywordCounts).sort().forEach(function (keyword) {
-          dataList.append('<option value="' + keyword + '">');
-        });
-
-        // other codes
-
+        // $.getJSON("./data/items.json", function (items) {
         var categoryCounts = {};
         var groups = {};
         console.log(items);
@@ -275,62 +229,62 @@
         // Load the categories from the categories JSON file
         $.getJSON("https://raw.githubusercontent.com/Xatta-Trone/dummy-data-ait-lab/refs/heads/main/categories.json", function (categories) {
           // $.getJSON("./data/categories.json", function (categories) {
-          // var sidebar = $("#sidebar");
+          var sidebar = $("#sidebar");
 
           // Iterate through the categories array
-          // categories.forEach(function (categoryItem) {
-          //   Object.keys(categoryItem).forEach(function (categoryName) {
-          //     var categoryHTML =
-          //       '<div class="list-group-item active"><strong>' +
-          //       categoryName +
-          //       "</strong></div>";
+          categories.forEach(function (categoryItem) {
+            Object.keys(categoryItem).forEach(function (categoryName) {
+              var categoryHTML =
+                '<div class="list-group-item active"><strong>' +
+                categoryName +
+                "</strong></div>";
 
-          //     // Check if the category has subcategories (arrays or objects)
-          //     var subcategories = categoryItem[categoryName];
-          //     subcategories.forEach(function (subItem) {
-          //       if (typeof subItem === "string") {
-          //         // Direct subcategory with label, checkbox, and count
-          //         var count = categoryCounts[subItem] || 0;
-          //         categoryHTML +=
-          //           '<div class="list-group-item indent-level-1">' +
-          //           '<input type="checkbox" class="filter-checkbox" data-label="' +
-          //           subItem +
-          //           '"> ' +
-          //           '<label class="selectable-label">' +
-          //           subItem +
-          //           " (" +
-          //           count +
-          //           ")</label>" +
-          //           "</div>";
-          //       } else if (typeof subItem === "object") {
-          //         Object.keys(subItem).forEach(function (subCatName) {
-          //           console.log("sub item name:", subItem);
-          //           categoryHTML +=
-          //             '<div class="list-group-item indent-level-1">&nbsp;&nbsp;<strong>' +
-          //             subCatName +
-          //             "</strong></div>";
-          //           subItem[subCatName].forEach(function (subSubItem) {
-          //             var count = categoryCounts[subSubItem] || 0;
-          //             categoryHTML +=
-          //               '<div class="list-group-item indent-level-2">' +
-          //               '<input type="checkbox" class="filter-checkbox" data-label="' +
-          //               subSubItem +
-          //               '"> ' +
-          //               '<label class="selectable-label">' +
-          //               subSubItem +
-          //               " (" +
-          //               count +
-          //               ")</label>" +
-          //               "</div>";
-          //           });
-          //         });
-          //       }
-          //     });
+              // Check if the category has subcategories (arrays or objects)
+              var subcategories = categoryItem[categoryName];
+              subcategories.forEach(function (subItem) {
+                if (typeof subItem === "string") {
+                  // Direct subcategory with label, checkbox, and count
+                  var count = categoryCounts[subItem] || 0;
+                  categoryHTML +=
+                    '<div class="list-group-item indent-level-1">' +
+                    '<input type="checkbox" class="filter-checkbox" data-label="' +
+                    subItem +
+                    '"> ' +
+                    '<label class="selectable-label">' +
+                    subItem +
+                    " (" +
+                    count +
+                    ")</label>" +
+                    "</div>";
+                } else if (typeof subItem === "object") {
+                  Object.keys(subItem).forEach(function (subCatName) {
+                    console.log("sub item name:", subItem);
+                    categoryHTML +=
+                      '<div class="list-group-item indent-level-1">&nbsp;&nbsp;<strong>' +
+                      subCatName +
+                      "</strong></div>";
+                    subItem[subCatName].forEach(function (subSubItem) {
+                      var count = categoryCounts[subSubItem] || 0;
+                      categoryHTML +=
+                        '<div class="list-group-item indent-level-2">' +
+                        '<input type="checkbox" class="filter-checkbox" data-label="' +
+                        subSubItem +
+                        '"> ' +
+                        '<label class="selectable-label">' +
+                        subSubItem +
+                        " (" +
+                        count +
+                        ")</label>" +
+                        "</div>";
+                    });
+                  });
+                }
+              });
 
-          //     // Append the generated category and subcategory HTML with counts
-          //     sidebar.append(categoryHTML);
-          //   });
-          // });
+              // Append the generated category and subcategory HTML with counts
+              sidebar.append(categoryHTML);
+            });
+          });
 
           // Handle filter checkbox click events
           $(document).on(
@@ -356,10 +310,6 @@
                 });
               }
 
-              // Update the URL with the search keyword as a query parameter
-              const newUrl = window.location.origin + window.location.pathname + (selectedFilters.length > 0 ? '?q=' + encodeURIComponent(selectedFilters.join('; ')) : '');
-              history.pushState({}, document.title, newUrl);
-
               // Refresh filter list and filter items by categories
               updateFilterList();
               filterItems();
@@ -370,28 +320,7 @@
           $("#customSearchBtn").click(function () {
             var keyword = $("#customKeyword").val();
             if (keyword) {
-              // check if the keyword exists in the sidebar and check its checkbox
-              var matchingCheckbox = $('.filter-checkbox[data-label="' + keyword.toLowerCase() + '"]');
-              if (matchingCheckbox.length) {
-                matchingCheckbox.prop("checked", true);
-                if (!selectedFilters.includes(keyword.toLowerCase())) {
-                  selectedFilters.push(keyword.toLowerCase());
-                }
-              }else {
-                // If keyword not in sidebar, just add it to selectedKeyword
-                selectedKeyword = keyword;
-              }
-              // Update the URL with the search keyword as a query parameter
-              const newUrl = window.location.origin + window.location.pathname + '?q=' + encodeURIComponent(selectedFilters.join('; '));
-              history.pushState({}, document.title, newUrl);
-            } else {
-              selectedKeyword = "";
-              // Clear the URL query parameter if the search box is empty
-              const newUrl = window.location.origin + window.location.pathname;
-              history.pushState({}, document.title, newUrl);
-            }
-            // Refresh filter list and filter items by keyword
-            if (selectedKeyword || selectedFilters.length > 0) {
+              selectedKeyword = keyword;
               updateFilterList();
               filterItems();
             }
@@ -442,10 +371,6 @@
               );
             }
 
-            // Update the URL with the search keyword as a query parameter
-            const newUrl = window.location.origin + window.location.pathname + (selectedFilters.length > 0 ? '?q=' + encodeURIComponent(selectedFilters.join('; ')) : '');
-            history.pushState({}, document.title, newUrl);
-
             // Refresh filter list and filter items
             updateFilterList();
             filterItems();
@@ -474,18 +399,6 @@
               // Split by semicolon, trim spaces, and return array
               let kk = q.split(';').map(k => k.trim().toLocaleLowerCase()).filter(Boolean);
               console.log("Query Keywords:", kk);
-
-              // if queyr params exist, add them to selectedFilters if not already present
-              kk.forEach(k => {
-                if (!selectedFilters.includes(k)) {
-                  selectedFilters.push(k);
-                  // check the corresponding checkbox in the sidebar
-                  $('.filter-checkbox[data-label="' + k + '"]').prop("checked", true);
-                }
-                updateFilterList();
-              });
-
-
               return kk;
             }
 
@@ -496,34 +409,32 @@
 
             // Get the filtered items
             var filteredItems = items.filter(function (item) {
-              // Normalize item keywords to lowercase for comparison
-              var itemKeywords = (item.keywords || []).map(k => k.toLowerCase());
-
-              // Filter by selected keywords (from sidebar checkboxes)
-              var matchesSelectedKeywords =
+              // Filter by categories
+              var matchesCategory =
                 selectedFilters.length === 0 ||
                 selectedFilters.some(function (filter) {
-                  return itemKeywords.includes(filter.toLowerCase());
+                  return item.categories.includes(filter);
                 });
 
-              // Filter by keyword in title (from search box)
-              var matchesTitleKeyword = selectedKeyword
-                ? (item.title || "").toLowerCase().includes(selectedKeyword.toLowerCase())
+              // Filter by keyword in title
+              var matchesKeyword = selectedKeyword
+                ? item.title
+                  .toLowerCase()
+                  .includes(selectedKeyword.toLowerCase())
                 : true;
-
-              // Filter by query keywords in URL (?q=...)
-              var matchesQueryKeywords =
-                queryKeywords.length === 0 ||
+              
+              let itemKeywords = (item.keywords || []).map(k => k.toLowerCase());
+              console.log("Item Keywords:", itemKeywords);
+              console.log("Query Keywords:", queryKeywords);
+              console.log("matchesCategory:", queryKeywords.some(qk => itemKeywords.includes(qk)));
+              
+              var matchQueryKeywords = queryKeywords.length === 0 ||
                 queryKeywords.some(function (qk) {
                   return itemKeywords.includes(qk);
-                });
+                }); 
 
-              return matchesSelectedKeywords && matchesTitleKeyword && matchesQueryKeywords;
+              return matchesCategory && matchesKeyword && matchQueryKeywords;
             });
-
-            // Update the filtered results count
-            var itemLabel = filteredItems.length === 1 ? "item" : "items";
-            $("h2:contains('Filtered Results')").text(`Filtered Results (showing ${filteredItems.length} ${itemLabel})`);
 
             // Group the filtered items by group
             var groupedItems = {};
@@ -582,7 +493,6 @@
                                           <li><a data-toggle="tab" class="tab_item" style="border: none; border-bottom: 3px solid #fdd262" href="#drawbacks${groupIndex}-${itemIndex}">Key Findings</a></li>
                                           <li><a data-toggle="tab" class="tab_item" style="border: none; border-bottom: 3px solid #c7b19c" href="#ref${groupIndex}-${itemIndex}">References</a></li>
                                           <li><a data-toggle="tab" class="tab_item" style="border: none; border-bottom: 3px solid #fdb81e" href="#measures${groupIndex}-${itemIndex}">Related Measures</a></li>
-                                          <li><a data-toggle="tab" class="tab_item" style="border: none; border-bottom: 3px solid #fdb81e" href="#keywords${groupIndex}-${itemIndex}">Keywords</a></li>
                                         </ul>
 
                                         <div class="tab-content">
@@ -603,9 +513,6 @@
                                           </div>
                                           <div id="measures${groupIndex}-${itemIndex}" class="tab-pane fade">
                                             <ul>${item.related_measures.map((measure) => `<li><a href="${measure.link}" target="_blank">${measure.title}</a></li>`).join("")}</ul>
-                                          </div>
-                                          <div id="keywords${groupIndex}-${itemIndex}" class="tab-pane fade">
-                                            <ul>${item.keywords.map((keyword) => `<li>${keyword}</li>`).join("")}</ul>
                                           </div>
                                           <p><a class="btn bg-blue" href="${item.pdf1 ? item.pdf1 : item.pdf}" target="_blank">Download PDF</a></p>
 
